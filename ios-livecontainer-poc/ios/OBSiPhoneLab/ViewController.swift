@@ -52,10 +52,11 @@ final class ViewController:UIViewController {
         let uplink=button("Start H.264 return to PC :9001") { [weak self] in
             guard let self=self,let text=self.host.text,!text.isEmpty else { return }; self.pipeline.startUplink(host:text)
         }
+        let retry=button("Retry camera / show permission status") { [weak self] in self?.pipeline.retryCamera() }
         let stop=button("Stop") { [weak self] in self?.pipeline.stop() }
-        status.font = .monospacedSystemFont(ofSize:11,weight:.regular); status.numberOfLines=3
-        status.text="Video-only PoC. \(ProbeKitIdentity())"
-        let stack=UIStackView(arrangedSubviews:[host,resolution,source,connect,uplink,stop,status,preview])
+        status.font = .monospacedSystemFont(ofSize:11,weight:.regular); status.numberOfLines=0
+        status.text="Camera diagnostics v2. Tap Connect first. \(ProbeKitIdentity())"
+        let stack=UIStackView(arrangedSubviews:[host,resolution,source,connect,retry,uplink,stop,status,preview])
         stack.axis = .vertical; stack.spacing=7; stack.translatesAutoresizingMaskIntoConstraints=false
         view.addSubview(stack)
         NSLayoutConstraint.activate([stack.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor,constant:12),
