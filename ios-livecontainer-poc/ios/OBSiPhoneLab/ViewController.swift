@@ -54,8 +54,8 @@ final class ViewController:UIViewController {
         }
         let retry=button("Retry camera / show permission status") { [weak self] in self?.pipeline.retryCamera() }
         let stop=button("Stop") { [weak self] in self?.pipeline.stop() }
-        status.font = .monospacedSystemFont(ofSize:11,weight:.regular); status.numberOfLines=0
-        status.text="Camera diagnostics v2. Tap Connect first. \(ProbeKitIdentity())"
+        status.font = .monospacedSystemFont(ofSize:10,weight:.regular); status.numberOfLines=0
+        status.text="Encoder diagnostics v3. Tap Connect first. \(ProbeKitIdentity())"
         let stack=UIStackView(arrangedSubviews:[host,resolution,source,connect,retry,uplink,stop,status,preview])
         stack.axis = .vertical; stack.spacing=7; stack.translatesAutoresizingMaskIntoConstraints=false
         view.addSubview(stack)

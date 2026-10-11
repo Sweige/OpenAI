@@ -6,7 +6,9 @@
     "iPhone_guest_runtime": "user reported ContainerSmoke launch and OBSiPhoneLab v1 network test pattern preview passed",
     "camera_branch": "user reported v2 real camera and CAM frames normal; switching back to network preview passed",
     "phone_encoding_return": "900 received/decoded frames, 720x1280 H264 Baseline, 30.0025 FPS from PTS, sequence continuous, no decode errors",
-    "USB_copy": "v1 own IPAs and v2 diagnostic IPA copied to separate folders; phone read-back SHA256 verified"
+    "USB_copy": "v1 own IPAs and v2 diagnostic IPA copied to separate folders; phone read-back SHA256 verified",
+    "encoder_v3": "Independent encoder queue and persistent phases; build and phone test pending",
+    "OBS_preview": "User reported real OBS 720/1080 previews and scene switching passed; 1080 uplink not passed"
   },
   "files": [
     {
@@ -15,14 +17,9 @@
       "sha256": "3178a4154d8101370aea891109676ce95eeb2db00df380d3d0f45e910c12b3c3"
     },
     {
-      "path": "GITHUB-LIVECONTAINER.md",
-      "bytes": 7507,
-      "sha256": "ad1f7bcf65cc68b16c9675c712841fe29b2b31650b1558d0135ec28f18356039"
-    },
-    {
-      "path": "README.md",
-      "bytes": 17771,
-      "sha256": "0cdfc2689aeea0ff32848d012019996b688dd3fefd298c6496d792ce91d38bd9"
+      "path": "config/mediamtx-local-obs.yml",
+      "bytes": 472,
+      "sha256": "f0589bf9a263b921c20c0b2b16b4b64f7c9afe36c22a4ef8e94847f92124719e"
     },
     {
       "path": "config/mediamtx.yml",
@@ -35,6 +32,11 @@
       "sha256": "f6ec6285d6192ce4fec284fed7c33fe3613d2430609dbd75dff5304d695abc5a"
     },
     {
+      "path": "GITHUB-LIVECONTAINER.md",
+      "bytes": 8870,
+      "sha256": "7773981a36b48016d4261394ad982d2b37fc415a0231895ad6422f6d14cea69e"
+    },
+    {
       "path": "ios/ContainerSmoke/main.m",
       "bytes": 4908,
       "sha256": "d3ba872264aafff90e509b0f992c1ef1bd338e1d3bb596500cadc42a61603140"
@@ -43,6 +45,11 @@
       "path": "ios/OBSiPhoneLab/Camera.swift",
       "bytes": 7083,
       "sha256": "f42a8e643cf90a6cda95ce5c38783ca211876c3ba47c02ec661d20de940486a5"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/EncoderWorker.swift",
+      "bytes": 3275,
+      "sha256": "e7bf52ab7f117d887bcce6e0e14d9c8a96b46f9eb5668733bb82482c8ff5d2fe"
     },
     {
       "path": "ios/OBSiPhoneLab/FrameNormalizer.swift",
@@ -56,13 +63,13 @@
     },
     {
       "path": "ios/OBSiPhoneLab/H264Encoder.swift",
-      "bytes": 4889,
-      "sha256": "e1ed9436856166225607e506d6c053ef136de699efe9300533c4d052e1713fec"
+      "bytes": 5598,
+      "sha256": "ca03100361c33cf1562c0c27b5f4ec71f020739e073bff67b0a47353f49c55c7"
     },
     {
       "path": "ios/OBSiPhoneLab/Pipeline.swift",
-      "bytes": 5014,
-      "sha256": "65a68f4998b6d6d681b3530acdada0d3688e5cdf7197d45a061374fa302b3277"
+      "bytes": 5470,
+      "sha256": "1eb12766654cfbc9c630f7782034c2d1636d9ebf45a88d82e048d74983ae3af2"
     },
     {
       "path": "ios/OBSiPhoneLab/StreamClient.swift",
@@ -71,8 +78,8 @@
     },
     {
       "path": "ios/OBSiPhoneLab/ViewController.swift",
-      "bytes": 5924,
-      "sha256": "2a484d9ec7a82ff030fcac0e8c6e3f0f83e699f17e1bbc9e6ec1cbd7af25f381"
+      "bytes": 5925,
+      "sha256": "544207f3abd15c1c6dd1595ca26bc84bacf1d36ab9dbfab0f64e9ad79a7b6e58"
     },
     {
       "path": "ios/OBSiPhoneLab/Wire.swift",
@@ -92,7 +99,12 @@
     {
       "path": "ios/project.yml",
       "bytes": 2626,
-      "sha256": "c61148f027b79c485c7059ddd1a467bc28e68395b1672507a62cf73ac06a2185"
+      "sha256": "8f60e6b90becda4c0cb47d6e59874f1644df608d0106d79afe17935ef3c556ba"
+    },
+    {
+      "path": "README.md",
+      "bytes": 19201,
+      "sha256": "7d69d2402669559a422fa94428e4575a9ae96ab723a994c129ad844f7925f152"
     },
     {
       "path": "scripts/build-ios.sh",
@@ -105,19 +117,24 @@
       "sha256": "dd5d1f1234b94d062bd8ba63cf45878ede13a8c1a4f290f6adeed0085a7e60a0"
     },
     {
+      "path": "validation/empty-uplink-reconnect.json",
+      "bytes": 893,
+      "sha256": "53d3510a16cc127149fdd862d0a37843e77a4e24fe5baa6f92318f2d7c3bd3f9"
+    },
+    {
       "path": "validation/phone-return-720-v2.json",
       "bytes": 1149,
       "sha256": "03dd379d6be98c9ef83b3c9a113f735c33e5a265e28bc99af23d97d6e5e87bf5"
     },
     {
       "path": "windows/bridge.py",
-      "bytes": 8100,
-      "sha256": "14562faf38fbac263e8d23e2853b6eb508408af7fc394b5bd6b53827df6e2ebf"
+      "bytes": 8491,
+      "sha256": "23db5dbf4667ce6017acaacb92a3acd57ae98064ae7c356f2660e939e3e1946d"
     },
     {
       "path": "windows/check_bridge.py",
-      "bytes": 3593,
-      "sha256": "160ffc7920af8322b59d7a1298db75c9a98a5e06fd77b9b98ca66237975f71ba"
+      "bytes": 3772,
+      "sha256": "dd891faa74d6786d32af58e33f4082f97199fac1e182ee231f366e7092ad1ba5"
     },
     {
       "path": "windows/check_relay.py",

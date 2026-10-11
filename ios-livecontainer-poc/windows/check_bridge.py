@@ -43,6 +43,9 @@ def check(output,width,height):
     with (output/f'{width}x{height}-return.log').open('w') as logs:
         proc=subprocess.Popen([sys.executable,str(ROOT/'bridge.py'),'receive','--port',str(port),'--frames','60','--output',str(returned)],stdout=logs,stderr=logs)
         try:
+            # Reproduce a phone encoder restart before its first encoded frame.
+            with connect(port,proc):
+                pass
             with connect(port,proc) as s:
                 for seq,pts,flags,payload in packets: s.sendall(packet(payload,seq,pts,bool(flags&1)))
             proc.wait(timeout=10)
@@ -51,7 +54,8 @@ def check(output,width,height):
             if proc.poll() is None: proc.kill(); proc.wait()
     assert raw.read_bytes()==returned.read_bytes()
     return {'width':width,'height':height,'pictures':60,'B_frames':0,'first_key':bool(packets[0][2]&1),
-        'tcp_sender':'pass','ffmpeg_decode':'pass','tcp_return_receiver':'pass','iOS_build':'not_run','iPhone':'not_run'}
+        'tcp_sender':'pass','ffmpeg_decode':'pass','tcp_return_receiver':'pass',
+        'empty_uplink_reconnect':'pass','iOS_build':'not_run','iPhone':'not_run'}
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(); p.add_argument('--output',default='validation'); a=p.parse_args()

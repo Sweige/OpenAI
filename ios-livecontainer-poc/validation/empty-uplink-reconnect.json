@@ -1,0 +1,33 @@
+{
+  "time_utc": "2026-10-11T09:58:34Z",
+  "scope": "Windows loopback, no iPhone",
+  "ffmpeg": "ffmpeg version 2025-10-30-git-00c23bafb0-essentials_build-www.gyan.dev Copyright (c) 2000-2025 the FFmpeg developers",
+  "runs": [
+    {
+      "width": 720,
+      "height": 1280,
+      "pictures": 60,
+      "B_frames": 0,
+      "first_key": true,
+      "tcp_sender": "pass",
+      "ffmpeg_decode": "pass",
+      "tcp_return_receiver": "pass",
+      "empty_uplink_reconnect": "pass",
+      "iOS_build": "not_run",
+      "iPhone": "not_run"
+    },
+    {
+      "width": 1080,
+      "height": 1920,
+      "pictures": 60,
+      "B_frames": 0,
+      "first_key": true,
+      "tcp_sender": "pass",
+      "ffmpeg_decode": "pass",
+      "tcp_return_receiver": "pass",
+      "empty_uplink_reconnect": "pass",
+      "iOS_build": "not_run",
+      "iPhone": "not_run"
+    }
+  ]
+}

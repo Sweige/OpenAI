@@ -86,8 +86,20 @@ def send(a):
 def receive(a):
     path = pathlib.Path(a.output); path.parent.mkdir(parents=True, exist_ok=True)
     with listen(a) as server:
-        conn, addr = server.accept()
-        print('Uplink connected', addr, flush=True)
+        while True:
+            conn, addr = server.accept()
+            print('Uplink connected', addr, flush=True)
+            count = receive_connection(a, path, conn)
+            if count:
+                print('Completed', count, flush=True)
+                return
+            # Starting/restarting the phone encoder cancels its old connection.
+            # An empty connection must not consume the single capture attempt.
+            print('Empty uplink closed; still listening for a new connection', flush=True)
+
+
+def receive_connection(a, path, conn):
+    with conn:
         parser = PacketParser(); count = 0; last_pts = None
         # Optional own-server RTMP relay. The lab transport is video-only: assign
         # constant-rate timestamps here; production must mux the original A/V clock.
@@ -107,7 +119,6 @@ def receive(a):
                     except subprocess.TimeoutExpired:
                         relay.terminate(); relay.wait(timeout=3)
                 stack.callback(finish_relay)
-            stack.enter_context(conn)
             output = stack.enter_context(path.open('wb'))
             log = stack.enter_context(path.with_suffix('.csv').open('w', newline=''))
             writer = csv.writer(log)
@@ -125,10 +136,10 @@ def receive(a):
                     if count % 30 == 0:
                         print(f'received {count} encoded pictures', flush=True)
                     if a.frames and count >= a.frames:
-                        print('Completed', count, flush=True); return
+                        return count
             if parser.buffer:
                 raise ValueError('truncated final wire packet')
-        print('Completed', count, flush=True)
+        return count
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
