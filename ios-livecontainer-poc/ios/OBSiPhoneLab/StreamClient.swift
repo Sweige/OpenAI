@@ -6,33 +6,53 @@ final class StreamClient {
     private let queue: DispatchQueue
     private var connection: NWConnection?
     private let parser = WireParser()
+    private var endpoint: (String,UInt16)?
+    private var generation:UInt64=0
+    private var retries=0
     var onPacket: ((WirePacket) -> Void)?
     var onState: ((String) -> Void)?
     init(queue: DispatchQueue) { self.queue=queue }
     func connect(host: String, port: UInt16) {
         stop()
+        endpoint=(host,port); retries=0
+        open(token:generation)
+    }
+    private func open(token:UInt64) {
+        guard generation == token, let (host,port)=endpoint else { return }
         let parameters = NWParameters.tcp
         (parameters.defaultProtocolStack.transportProtocol as? NWProtocolTCP.Options)?.noDelay = true
         let c = NWConnection(host: NWEndpoint.Host(host), port: NWEndpoint.Port(rawValue: port)!, using: parameters)
         connection=c
         c.stateUpdateHandler = { [weak self, weak c] state in
-            guard let self=self, let c=c, self.connection === c else { return }
+            guard let self=self, let c=c, self.generation == token, self.connection === c else { return }
             self.onState?("RX: \(state)")
-            if case .ready = state { self.read(c) }
+            if case .ready = state { self.retries=0; self.read(c,token:token) }
+            if case .failed = state { self.retry(c,token:token) }
         }
         c.start(queue: queue)
     }
-    private func read(_ c: NWConnection) {
+    private func read(_ c: NWConnection,token:UInt64) {
         c.receive(minimumIncompleteLength: 1, maximumLength: 65536) { [weak self, weak c] data,_,complete,error in
-            guard let self=self, let c=c, self.connection === c else { return }
+            guard let self=self, let c=c, self.generation == token, self.connection === c else { return }
             do {
                 if let data=data { for p in try self.parser.feed(data) { self.onPacket?(p) } }
-            } catch { self.onState?("RX parse: \(error)"); self.stop(); return }
-            if complete || error != nil { self.onState?("RX ended. Tap Connect to restart."); self.stop(); return }
-            self.read(c)
+            } catch { self.retry(c,token:token,reason:"parse: \(error)"); return }
+            if complete || error != nil { self.retry(c,token:token,reason:"ended: \(String(describing:error))"); return }
+            self.read(c,token:token)
         }
     }
-    func stop() { connection?.cancel(); connection=nil; parser.reset() }
+    private func retry(_ c:NWConnection,token:UInt64,reason:String="connection failed") {
+        guard generation == token, connection === c else { return }
+        c.stateUpdateHandler=nil; c.cancel(); connection=nil; parser.reset()
+        retries += 1
+        let delay=min(5.0,0.5*pow(2.0,Double(min(retries-1,4))))
+        onState?("RX \(reason); reconnect in \(delay)s")
+        queue.asyncAfter(deadline:.now()+delay) { [weak self] in self?.open(token:token) }
+    }
+    func stop() {
+        generation &+= 1; endpoint=nil
+        connection?.stateUpdateHandler=nil; connection?.cancel(); connection=nil; parser.reset()
+    }
 }
 
 final class Uplink {

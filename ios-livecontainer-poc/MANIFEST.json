@@ -7,8 +7,10 @@
     "camera_branch": "user reported v2 real camera and CAM frames normal; switching back to network preview passed",
     "phone_encoding_return": "900 received/decoded frames, 720x1280 H264 Baseline, 30.0025 FPS from PTS, sequence continuous, no decode errors",
     "USB_copy": "v1 own IPAs and v2 diagnostic IPA copied to separate folders; phone read-back SHA256 verified",
-    "encoder_v3": "Independent encoder queue and persistent phases; build and phone test pending",
-    "OBS_preview": "User reported real OBS 720/1080 previews and scene switching passed; 1080 uplink not passed"
+    "encoder_v3": "CI passed 38130806628; USB hash verified; real-camera 1080 return: 613 received/decoded frames, no errors",
+    "OBS_preview": "User reported real OBS 720/1080 previews and scene switching passed; 1080 uplink not passed",
+    "network_v4": "Automatic network retry and input-only reconnect; build/phone test pending",
+    "phone_OBS_1080_return": "Not yet passed; preview confirmed by user, v3 source stopped before encoding"
   },
   "files": [
     {
@@ -33,8 +35,8 @@
     },
     {
       "path": "GITHUB-LIVECONTAINER.md",
-      "bytes": 8870,
-      "sha256": "7773981a36b48016d4261394ad982d2b37fc415a0231895ad6422f6d14cea69e"
+      "bytes": 10001,
+      "sha256": "fad78fbbe741ba35b60a11270ad073ae61ed51c2a916408f01cb22559674be28"
     },
     {
       "path": "ios/ContainerSmoke/main.m",
@@ -68,18 +70,18 @@
     },
     {
       "path": "ios/OBSiPhoneLab/Pipeline.swift",
-      "bytes": 5470,
-      "sha256": "1eb12766654cfbc9c630f7782034c2d1636d9ebf45a88d82e048d74983ae3af2"
+      "bytes": 5958,
+      "sha256": "524cb14171d30ec8e0bd68d46e20a50eb1cad9d50c89c16eb4a247e009d18e01"
     },
     {
       "path": "ios/OBSiPhoneLab/StreamClient.swift",
-      "bytes": 3149,
-      "sha256": "ecae79fb1bbef4993a6b2f1ab7bad3ac062fe8cf1b718ab15186fe9e356c8009"
+      "bytes": 4186,
+      "sha256": "a98e23dc75f44d358f29af6e9a637d9e3451ad62fbb1299cf8e253ef492b7006"
     },
     {
       "path": "ios/OBSiPhoneLab/ViewController.swift",
-      "bytes": 5925,
-      "sha256": "544207f3abd15c1c6dd1595ca26bc84bacf1d36ab9dbfab0f64e9ad79a7b6e58"
+      "bytes": 6169,
+      "sha256": "7ea6489576b510fad6b2c3523a775eb39080f02bef0bd8e3cb765d34df2eb3dd"
     },
     {
       "path": "ios/OBSiPhoneLab/Wire.swift",
@@ -99,12 +101,12 @@
     {
       "path": "ios/project.yml",
       "bytes": 2626,
-      "sha256": "8f60e6b90becda4c0cb47d6e59874f1644df608d0106d79afe17935ef3c556ba"
+      "sha256": "f4a31a1f23a9ec72ca6be1f879ba7d6f51931a72d13314635214b07340819610"
     },
     {
       "path": "README.md",
-      "bytes": 19201,
-      "sha256": "7d69d2402669559a422fa94428e4575a9ae96ab723a994c129ad844f7925f152"
+      "bytes": 20406,
+      "sha256": "c3621acb81e1a3b7c0a24f188b867c71a3b7420bf9b467bd8fb558daf298c62f"
     },
     {
       "path": "scripts/build-ios.sh",
@@ -120,6 +122,11 @@
       "path": "validation/empty-uplink-reconnect.json",
       "bytes": 893,
       "sha256": "53d3510a16cc127149fdd862d0a37843e77a4e24fe5baa6f92318f2d7c3bd3f9"
+    },
+    {
+      "path": "validation/phone-camera-1080-v3.json",
+      "bytes": 1372,
+      "sha256": "f2cef06d24e06852de26ed3ed95f576edfde80d0a15e7a2b356b038c1e1d2ba9"
     },
     {
       "path": "validation/phone-return-720-v2.json",

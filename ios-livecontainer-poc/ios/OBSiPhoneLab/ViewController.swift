@@ -53,10 +53,14 @@ final class ViewController:UIViewController {
             guard let self=self,let text=self.host.text,!text.isEmpty else { return }; self.pipeline.startUplink(host:text)
         }
         let retry=button("Retry camera / show permission status") { [weak self] in self?.pipeline.retryCamera() }
+        let reconnect=button("Reconnect network only (keep encoder)") { [weak self] in
+            guard let self=self,let text=self.host.text,!text.isEmpty else { return }
+            self.pipeline.reconnectNetwork(host:text)
+        }
         let stop=button("Stop") { [weak self] in self?.pipeline.stop() }
         status.font = .monospacedSystemFont(ofSize:10,weight:.regular); status.numberOfLines=0
-        status.text="Encoder diagnostics v3. Tap Connect first. \(ProbeKitIdentity())"
-        let stack=UIStackView(arrangedSubviews:[host,resolution,source,connect,retry,uplink,stop,status,preview])
+        status.text="Network recovery v4. Tap Connect first. \(ProbeKitIdentity())"
+        let stack=UIStackView(arrangedSubviews:[host,resolution,source,connect,reconnect,retry,uplink,stop,status,preview])
         stack.axis = .vertical; stack.spacing=7; stack.translatesAutoresizingMaskIntoConstraints=false
         view.addSubview(stack)
         NSLayoutConstraint.activate([stack.leadingAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leadingAnchor,constant:12),

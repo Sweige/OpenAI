@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-11",
+  "source": "own iPhone app uplink received on TCP 9001",
+  "file_sha256": "7c6c71c9dc21d0e629a1a239a0918e3360d043cc1c697ab63ec1c4fceaf51aaf",
+  "bytes": 15406409,
+  "encoded_packets": 613,
+  "key_packets": 21,
+  "sequence_missing_packets": 0,
+  "pts_monotonic": true,
+  "pts_span_seconds": 20.400016,
+  "fps_from_original_pts": 29.99997647060669,
+  "fps_from_arrival_interval": 30.058939096267192,
+  "pts_delta_us": {
+    "min": 31134,
+    "median": 33333.0,
+    "p95": 34850,
+    "max": 35533
+  },
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "profile": "Baseline",
+        "width": 1080,
+        "height": 1920,
+        "has_b_frames": 0,
+        "pix_fmt": "yuv420p",
+        "nb_read_frames": "613"
+      }
+    ]
+  },
+  "full_decode_exit_code": 0,
+  "full_decode_errors": "",
+  "limits": [
+    "video only",
+    "local receive timing is not end-to-end latency",
+    "short functional sample is not a long-term stability test",
+    "Camera source selected by user; this capture is not proof of OBS network return"
+  ],
+  "input_source": "Real camera, explicitly selected by user for encoder isolation test",
+  "capture_end": "Receiver observed EOF after 613 packets; 900-frame cap not reached; reason not established"
+}

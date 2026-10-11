@@ -21,6 +21,8 @@ final class Pipeline {
     private var cameraMessage="Camera not started; tap Connect first"
     private var encoderMessage="Encoder not started"
     private var txMessage="TX not connected"
+    private var rxMessage="RX not connected"
+    private var decoderMessage="Decoder not started"
     var onPreview:((CMSampleBuffer)->Void)?
     var onStatus:((String)->Void)?
     init() {
@@ -35,8 +37,8 @@ final class Pipeline {
             stopInternal()
             do { normalizer=try FrameNormalizer(width:fullHD ? 1080:720,height:fullHD ? 1920:1280) }
             catch { onStatus?("Pool: \(error)"); return }
-            let info:(String)->Void = { [weak self] in self?.onStatus?($0) }
-            receiver.onState=info; decoder.onInfo=info
+            receiver.onState = { [weak self] in self?.rxMessage=$0 }
+            decoder.onInfo = { [weak self] in self?.decoderMessage=$0 }
             uplink.onState = { [weak self] in self?.txMessage=$0 }
             encoder.onInfo = { [weak self] in self?.encoderMessage=$0 }
             camera.onInfo = { [weak self] text in
@@ -45,7 +47,7 @@ final class Pipeline {
                 self.onStatus?(text)
             }
             receiver.onPacket = { [weak self] p in
-                do { try self?.decoder.decode(p) } catch { self?.onStatus?("RX decode \(error)") }
+                do { try self?.decoder.decode(p) } catch { self?.decoderMessage="RX decode \(error)" }
             }
             camera.onFrame = { [weak self] p in
                 guard let self=self else { return }
@@ -57,6 +59,7 @@ final class Pipeline {
             }
             epoch=CACurrentMediaTime(); lastPTS = .invalid; rxCount=0; txCount=0; camCount=0; ticks=0
             encoderMessage="Encoder not started"; txMessage="TX not connected"
+            rxMessage="RX connecting"; decoderMessage="Decoder awaiting SPS/PPS"
             if useNetwork { cameraMessage="Camera paused for OBS network" }
             else { cameraMessage="Camera starting"; camera.start() }
             receiver.connect(host:host,port:9000)
@@ -84,6 +87,13 @@ final class Pipeline {
             self.camera.stop(); self.local=nil; self.camCount=0; self.camera.start()
         }
     }
+    func reconnectNetwork(host:String) {
+        queue.async { [self] in
+            guard normalizer != nil else { onStatus?("Tap Connect / restart input first"); return }
+            network=nil
+            receiver.connect(host:host,port:9000)
+        }
+    }
     func startUplink(host:String) {
         queue.async { [self] in
             guard let n=normalizer else { onStatus?("Connect input first"); return }
@@ -96,7 +106,7 @@ final class Pipeline {
         let now=CACurrentMediaTime()
         let selected=useNetwork ? network:local
         if ticks%30 == 0 {
-            onStatus?("\(useNetwork ? "OBS":"Camera") RX decoded=\(rxCount), CAM frames=\(camCount), TX encoded=\(txCount)\nsource age=\(selected.map{Int((now-$0.1)*1000)} ?? -1) ms; ENC pending=\(encoder.pending), dropped=\(encoder.dropped)\n\(encoderMessage)\n\(txMessage)\n\(cameraMessage)")
+            onStatus?("\(useNetwork ? "OBS":"Camera") RX decoded=\(rxCount), CAM frames=\(camCount), TX encoded=\(txCount)\nsource age=\(selected.map{Int((now-$0.1)*1000)} ?? -1) ms; ENC pending=\(encoder.pending), dropped=\(encoder.dropped)\n\(rxMessage)\n\(decoderMessage)\n\(encoderMessage)\n\(txMessage)\n\(cameraMessage)")
         }
         // A stale input stops producing encoded output; do not silently stream it forever.
         guard let (input,arrival)=selected, now-arrival < 0.5, let n=normalizer else { return }

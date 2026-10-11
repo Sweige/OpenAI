@@ -45,7 +45,7 @@ targets:
       path: Info.plist
       properties:
         CFBundleDisplayName: OBS iPhone Lab
-        CFBundleVersion: '3'
+        CFBundleVersion: '4'
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
