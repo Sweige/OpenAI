@@ -1,6 +1,6 @@
 # OBS → iPhone 自研视频源切换实验
 
-独立外部插件实验已新增：[EXTERNAL-VCAM.md](EXTERNAL-VCAM.md)。`OBSCaptureHook.dylib` 单独构建、不嵌入 IPA，只匹配本项目 bundle/delegate；CI 编译和 USB 回读已通过，手机加载及回调替换验收等待操作结果。插件使用端口9002，宿主保持 Real camera；此前 v4 内置网络源的成功不能视为外部插件成功。
+独立外部插件实验已新增：[EXTERNAL-VCAM.md](EXTERNAL-VCAM.md)。`OBSCaptureHook.dylib` 单独构建、不嵌入 IPA，只匹配本项目 bundle/delegate；CI 编译、USB 回读与手机外部加载已通过；宿主Real camera下的Pattern回调替换已取得900帧720编码回传，逐帧计数538→1437连续且无重复。插件OBS模式待测；中间灰阶亮度改变，保真未通过。插件使用端口9002，宿主保持 Real camera；此前 v4 内置网络源的成功不能视为外部插件成功。
 
 ## 最新实机结果（2026-10-11，v4）
 

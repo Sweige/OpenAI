@@ -35,8 +35,8 @@
     },
     {
       "path": "EXTERNAL-VCAM.md",
-      "bytes": 8002,
-      "sha256": "3f329872f6ce91af155f7a9dee2e4e126e75b85c23225f91fdc7fff951cd20fb"
+      "bytes": 8828,
+      "sha256": "40be041901ef608cdca227d8006cbaf5653eea92a21b9978710a239ed5051728"
     },
     {
       "path": "GITHUB-LIVECONTAINER.md",
@@ -125,8 +125,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 22574,
-      "sha256": "defc276be87140ebcaf69623edbd9e41c61cde0dbda931692288661f0deef0dd"
+      "bytes": 23018,
+      "sha256": "b6409391834f898054bba5d2236cfbe344f3d69338e368095b4ae0eb0232ce91"
     },
     {
       "path": "scripts/build-ios.sh",
@@ -149,9 +149,24 @@
       "sha256": "53d3510a16cc127149fdd862d0a37843e77a4e24fe5baa6f92318f2d7c3bd3f9"
     },
     {
+      "path": "validation/pattern-inspector-synthetic.json",
+      "bytes": 440,
+      "sha256": "f5ae0808c0cc5cabac37c8a7314c22691d854285cbc94de38a6c29a70c3f21ce"
+    },
+    {
       "path": "validation/phone-camera-1080-v3.json",
       "bytes": 1372,
       "sha256": "f2cef06d24e06852de26ed3ed95f576edfde80d0a15e7a2b356b038c1e1d2ba9"
+    },
+    {
+      "path": "validation/phone-external-pattern-720-v1.json",
+      "bytes": 1205,
+      "sha256": "4c62aa619431a964270bb15afcdb8266991cb9edd4b8b54b12fab58c2d8596f7"
+    },
+    {
+      "path": "validation/phone-external-pattern-content-v1.json",
+      "bytes": 5595,
+      "sha256": "467b9958e4b272f8437c4e744dd3f6bbcb75804cdc2ede070d0cdd8c4b711576"
     },
     {
       "path": "validation/phone-obs-1080-v4.json",
@@ -175,8 +190,8 @@
     },
     {
       "path": "windows/check_hook_pattern.py",
-      "bytes": 3285,
-      "sha256": "1b93a85cb19f0d326e12b784ade2564412a72300ff230bfb891cb83953caf826"
+      "bytes": 5585,
+      "sha256": "c079750b58190712667df1e55b2a707f5b2aa689ba496488946e9a352e64e6c5"
     },
     {
       "path": "windows/check_relay.py",
@@ -197,5 +212,5 @@
   "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
   "source_build_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
   "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings.",
-  "external_hook": "Actions38133205057 success; USB hash passed; root copy dlopen failed: missing code signature; per-app local signing fix pending"
+  "external_hook": "Local signing and external load passed; Real camera/Pattern callback replacement and900-frame720 return verified; source stamps538..1437 distinct/consecutive; raw-luma fidelity failed; external OBS pending"
 }

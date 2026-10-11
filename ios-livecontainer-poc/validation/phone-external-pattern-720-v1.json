@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-11",
+  "source": "own iPhone app uplink received on TCP 9001",
+  "file_sha256": "0570023cf13495ae82b01f1822d8e4d1a23ed2c9b1e703003985d83730f958eb",
+  "bytes": 720438,
+  "encoded_packets": 900,
+  "key_packets": 30,
+  "sequence_missing_packets": 0,
+  "pts_monotonic": true,
+  "pts_span_seconds": 29.967717,
+  "fps_from_original_pts": 29.99894853518538,
+  "fps_from_arrival_interval": 29.981657495414375,
+  "pts_delta_us": {
+    "min": 31150,
+    "median": 33317,
+    "p95": 34884,
+    "max": 35516
+  },
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "profile": "Baseline",
+        "width": 720,
+        "height": 1280,
+        "has_b_frames": 0,
+        "pix_fmt": "yuv420p",
+        "nb_read_frames": "900"
+      }
+    ]
+  },
+  "full_decode_exit_code": 0,
+  "full_decode_errors": "",
+  "limits": [
+    "video only",
+    "local receive timing is not end-to-end latency",
+    "short functional sample is not a long-term stability test",
+    "source selection/operator evidence: User confirms Real camera host, external plugin Pattern, counters and TX increasing"
+  ]
+}

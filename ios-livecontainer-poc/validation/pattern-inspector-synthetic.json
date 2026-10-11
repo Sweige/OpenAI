@@ -1,0 +1,18 @@
+{
+  "positive": {
+    "exit_code": 0,
+    "pattern_verified": true,
+    "raw_generator_luma_preserved": true
+  },
+  "changed-luma": {
+    "exit_code": 0,
+    "pattern_verified": true,
+    "raw_generator_luma_preserved": false
+  },
+  "negative": {
+    "exit_code": 2,
+    "pattern_verified": false,
+    "raw_generator_luma_preserved": false
+  },
+  "scope": "Synthetic inspector checks only; not phone / injection evidence"
+}
