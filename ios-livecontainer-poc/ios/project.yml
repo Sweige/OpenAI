@@ -1,0 +1,84 @@
+name: OBSiPhoneLab
+options:
+  deploymentTarget:
+    iOS: '18.0'
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    TARGETED_DEVICE_FAMILY: '1'
+    CODE_SIGN_STYLE: Automatic
+    CLANG_ENABLE_OBJC_ARC: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+targets:
+  ContainerSmoke:
+    type: application
+    platform: iOS
+    sources: [ContainerSmoke]
+    info:
+      path: ContainerSmoke-Info.plist
+      properties:
+        CFBundleDisplayName: Container Smoke
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default
+                UISceneDelegateClassName: SmokeSceneDelegate
+        NSCameraUsageDescription: Test the camera permission of our own container guest app.
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIRequiresFullScreen: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.ContainerSmoke
+    dependencies:
+      - sdk: UIKit.framework
+      - sdk: AVFoundation.framework
+      - sdk: QuartzCore.framework
+      - target: ProbeKit
+        embed: true
+  OBSiPhoneLab:
+    type: application
+    platform: iOS
+    sources: [OBSiPhoneLab]
+    info:
+      path: Info.plist
+      properties:
+        CFBundleDisplayName: OBS iPhone Lab
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        NSCameraUsageDescription: Compare the real camera with a network test input.
+        NSLocalNetworkUsageDescription: Receive OBS test video from your computer and return encoded frames.
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIRequiresFullScreen: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.OBSiPhoneLab
+    dependencies:
+      - target: ProbeKit
+        embed: true
+  ProbeKit:
+    type: framework
+    platform: iOS
+    sources:
+      - path: ProbeKit
+        headerVisibility: public
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.OBSiPhoneLab.ProbeKit
+        GENERATE_INFOPLIST_FILE: YES
+        DEFINES_MODULE: YES
+schemes:
+  ContainerSmoke:
+    build:
+      targets:
+        ContainerSmoke: all
+  OBSiPhoneLab:
+    build:
+      targets:
+        OBSiPhoneLab: all

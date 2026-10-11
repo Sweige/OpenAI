@@ -1,0 +1,10 @@
+build/
+artifacts/
+__pycache__/
+*.pyc
+*.xcuserstate
+xcuserdata/
+ios/*.xcodeproj/
+ios/Info.plist
+ios/ContainerSmoke-Info.plist
+.DS_Store

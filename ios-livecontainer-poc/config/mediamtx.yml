@@ -1,0 +1,12 @@
+# Alternative to SRS. Use only one RTMP server on port 1936.
+rtmp: yes
+rtmpAddress: :1936
+rtsp: yes
+rtspAddress: :8554
+hls: no
+webrtc: yes
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189
+# Add the actual PC LAN IP to webrtcAdditionalHosts for a phone WHEP client.
+paths:
+  all_others:
