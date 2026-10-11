@@ -1,5 +1,7 @@
 # OBS → iPhone 自研视频源切换实验
 
+独立外部插件实验已新增：[EXTERNAL-VCAM.md](EXTERNAL-VCAM.md)。`OBSCaptureHook.dylib` 单独构建、不嵌入 IPA，只匹配本项目 bundle/delegate；CI 编译和 USB 回读已通过，手机加载及回调替换验收等待操作结果。插件使用端口9002，宿主保持 Real camera；此前 v4 内置网络源的成功不能视为外部插件成功。
+
 ## 最新实机结果（2026-10-11，v4）
 
 **OBS → iPhone 自研 App → 电脑的 1080×1920 视频回传已取得实际码流验证。**用户确认 v4 网络画面恢复、RX/TX 增加；电脑接收 900 个编码画面并逐帧完整解码：H.264 Baseline、无 B 帧，PTS 严格递增、序号无缺口，29.966417 秒、平均 30.00025 FPS，解码退出码 0、错误日志为空。码流 11,342,842 字节，SHA-256 `4e945c0287187fe2b34026b7ed740ff855f21ecc5517e3cf252cea7a3c6fdeb4`。

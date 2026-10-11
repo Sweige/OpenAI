@@ -61,4 +61,8 @@ No panel: inspect tweak folder assignment, enabled switch, local signing error, 
 
 For a successful test retain numeric mode/counter observations, capture SHA256, dimensions, full-decode result, PTS/sequence analysis and proof of source content. Raw real-camera/OBS desktop captures remain local and must not be uploaded to the source repository.
 
-At initial implementation **build and phone runtime validation are pending**. A successful self-owned test would establish external application-local camera callback replacement under this LiveContainer setup; applying it to another authorized App requires its own capture/preview/encoder integration assessment.
+Build passed [Actions 38133205057](https://github.com/Sweige/OpenAI/actions/runs/38133205057), commit `843b223ffc258b987b95d0ad6aa7850708a84167`, using Xcode26.6 / SDK26.5, minimumiOS18. The standalone136,848-byte dylib has SHA256 `1f45abd81c351c2169923365cecca46b48221d069e7fdd7a3e536ffaac900d34`; independent inspection against the existing v4 IPA confirmed it is absent. USB copy and readback passed. **Phone tweak import, external load and replacement validation are pending.**
+
+For a Pattern capture, `python windows/check_hook_pattern.py capture/external-pattern/return.h264 --report capture/pattern-proof.json` checks the seven luma columns and changing binary counter in decoded return frames. Use FFmpeg/FFprobe on PATH or pass their executable paths. Keep the host in Real camera and record external-load/counter observations separately. Content matching alone does not establish how the module was loaded.
+
+A successful self-owned test would establish external application-local camera callback replacement under this LiveContainer setup; applying it to another authorized App requires its own capture/preview/encoder integration assessment.

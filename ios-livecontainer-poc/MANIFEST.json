@@ -35,8 +35,8 @@
     },
     {
       "path": "EXTERNAL-VCAM.md",
-      "bytes": 5728,
-      "sha256": "bcf6459e4e954c73ba88f32840e0be686baa934e60225fe4278b3c1d13d1cea4"
+      "bytes": 6568,
+      "sha256": "afdb43aab58a04c8b385a2a48592026ff70f7c2d7ec71bec4c64e383badb416a"
     },
     {
       "path": "GITHUB-LIVECONTAINER.md",
@@ -125,8 +125,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 22198,
-      "sha256": "24439079453e4732b196767212a7a6571609bad0642e03047a81e2092c8a7c93"
+      "bytes": 22574,
+      "sha256": "defc276be87140ebcaf69623edbd9e41c61cde0dbda931692288661f0deef0dd"
     },
     {
       "path": "scripts/build-ios.sh",
@@ -174,6 +174,11 @@
       "sha256": "dd891faa74d6786d32af58e33f4082f97199fac1e182ee231f366e7092ad1ba5"
     },
     {
+      "path": "windows/check_hook_pattern.py",
+      "bytes": 3285,
+      "sha256": "1b93a85cb19f0d326e12b784ade2564412a72300ff230bfb891cb83953caf826"
+    },
+    {
       "path": "windows/check_relay.py",
       "bytes": 2054,
       "sha256": "e749cf4fa80febf2a38bb19c8083f915d18d30e578402fad0e7a8d28df89caf2"
@@ -192,5 +197,5 @@
   "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
   "source_build_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
   "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings.",
-  "external_hook": "Independent OBSCaptureHook.dylib for own OBSiPhoneLab only; phone validation pending"
+  "external_hook": "Independent OBSCaptureHook.dylib: Actions38133205057 success; USB hash passed; phone external load and replacement pending"
 }
