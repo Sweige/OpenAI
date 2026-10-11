@@ -1,6 +1,6 @@
 # OBS → iPhone 自研视频源切换实验
 
-独立外部插件实验已新增：[EXTERNAL-VCAM.md](EXTERNAL-VCAM.md)。`OBSCaptureHook.dylib` 单独构建、不嵌入 IPA，只匹配本项目 bundle/delegate；CI 编译、USB 回读与手机外部加载已通过；宿主Real camera下的Pattern回调替换已取得900帧720编码回传，逐帧计数538→1437连续且无重复。插件OBS模式待测；中间灰阶亮度改变，保真未通过。插件使用端口9002，宿主保持 Real camera；此前 v4 内置网络源的成功不能视为外部插件成功。
+独立外部插件实验已新增：[EXTERNAL-VCAM.md](EXTERNAL-VCAM.md)。`OBSCaptureHook.dylib` 单独构建、不嵌入 IPA，只匹配本项目 bundle/delegate；CI 编译、USB 回读与手机外部加载已通过；宿主Real camera下的Pattern回调替换已取得900帧720编码回传，逐帧计数538→1437连续且无重复。插件真实OBS720及1080回传随后通过：最新1080实收900帧、29.99998 FPS、无解码错误、最大PTS间隔35.466ms。电脑新增预热发送器并优化Annex-B扫描；中间灰阶亮度改变，保真未通过。插件使用端口9002，宿主保持 Real camera；此前 v4 内置网络源的成功不能视为外部插件成功。
 
 ## 最新实机结果（2026-10-11，v4）
 
@@ -59,6 +59,8 @@ OBSiPhoneLab/
   config/srs.conf                SRS 可选配置
   windows/wire.py                OBSC/1 分包、Annex-B、AUD 分帧
   windows/bridge.py              OBS/测试图 → H.264 TCP；回传接收与可选 RTMP 转发
+  windows/warm_bridge.py         预热OBS编码，9002新客户端从下个IDR接入
+  windows/check_warm_bridge.py   两次TCP连接及完整解码回归
   windows/test_wire.py           拆包/合包/多 slice/异常长度验证
   windows/check_bridge.py        真实 Windows TCP + FFmpeg 端到端回环验证
   ios/project.yml               XcodeGen 工程定义，最低部署版本 iOS 18

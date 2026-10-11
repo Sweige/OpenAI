@@ -1,9 +1,11 @@
 """OBSC/1: big endian, 24 byte header, one complete Annex-B H.264 AU per packet."""
+import re
 import struct
 
 HEADER = struct.Struct('!4sBBHIIQ')
 MAGIC = b'OBSC'
 MAX_PAYLOAD = 8 * 1024 * 1024
+ANNEXB_START = re.compile(b'\x00\x00(?:\x00)?\x01')
 
 def packet(payload, sequence, pts_us, key=False):
     if not 0 < len(payload) <= MAX_PAYLOAD:
@@ -35,16 +37,10 @@ class AnnexBParser:
 
     @staticmethod
     def starts(b):
-        result = []
-        i = 0
-        while i + 3 <= len(b):
-            if b[i:i+4] == b'\x00\x00\x00\x01':
-                result.append((i, 4)); i += 4
-            elif b[i:i+3] == b'\x00\x00\x01':
-                result.append((i, 3)); i += 3
-            else:
-                i += 1
-        return result
+        # Scan in native code. A Python byte/slice loop can starve the live
+        # FFmpeg pipe at1080p and cause the upstream RTMP server to drop data.
+        return [(match.start(),match.end()-match.start())
+                for match in ANNEXB_START.finditer(b)]
 
     def feed(self, data, final=False):
         self.buffer.extend(data)

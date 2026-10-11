@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-11",
+  "operator_observations": {
+    "720": "Real camera host; external OBS9002 picture, TX and scene switching normal;35s completed",
+    "1080_first": "User reports normal use after initial warm sender; PC found one5.266716s PTS gap",
+    "1080_latest": "User replies no problem to1080 Real camera / external OBS / return / scene-switch check"
+  },
+  "manual_return_frame_inspection": {
+    "sample_indices": [
+      30,
+      90,
+      180,
+      270,
+      450,
+      630,
+      810,
+      880
+    ],
+    "720": "Seven sampled frames show OBS desktop/browser/sidebar; frame450 black; cause not established",
+    "1080_first": "OBS desktop/browser/sidebar; one sample shows OBS interface",
+    "1080_latest": "OBS desktop/browser/sidebar and OBS interface, consistent with operator scene-switch observation"
+  },
+  "limits": [
+    "No binary OBS source stamp; not a proof of900 unique source frames",
+    "Manual scene-switch observation is not a quantitative latency measurement",
+    "Video and sample images remain in private local work directory; excluded from repository/archive"
+  ]
+}

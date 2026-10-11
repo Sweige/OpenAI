@@ -1,0 +1,110 @@
+{
+  "passed": true,
+  "date": "2026-10-11",
+  "source": "local authorized OBS RTMP stream",
+  "test": "two sequential TCP clients join live1080 source after warm-ready; no encoder restart",
+  "encoder_process_starts": 1,
+  "clients": [
+    {
+      "client": 1,
+      "packets": 60,
+      "first_complete_AU_seconds": 1.0470000000059372,
+      "first_NAL_types": [
+        9,
+        7,
+        8,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "starts_with_SPS_PPS_IDR": true,
+      "sequence_consecutive": true,
+      "pts_monotonic": true,
+      "probe": [
+        {
+          "codec_name": "h264",
+          "width": 1080,
+          "height": 1920,
+          "has_b_frames": 0,
+          "nb_read_frames": "60"
+        }
+      ],
+      "full_decode_exit_code": 0,
+      "full_decode_errors": ""
+    },
+    {
+      "client": 2,
+      "packets": 60,
+      "first_complete_AU_seconds": 0.7969999999986612,
+      "first_NAL_types": [
+        9,
+        7,
+        8,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "starts_with_SPS_PPS_IDR": true,
+      "sequence_consecutive": true,
+      "pts_monotonic": true,
+      "probe": [
+        {
+          "codec_name": "h264",
+          "width": 1080,
+          "height": 1920,
+          "has_b_frames": 0,
+          "nb_read_frames": "60"
+        }
+      ],
+      "full_decode_exit_code": 0,
+      "full_decode_errors": ""
+    }
+  ],
+  "limits": [
+    "PC loopback only; phone compatibility needs separate test",
+    "first-AU wait is not end-to-end video latency",
+    "raw captures and images excluded from report"
+  ]
+}

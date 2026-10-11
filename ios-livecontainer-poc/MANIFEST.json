@@ -35,8 +35,8 @@
     },
     {
       "path": "EXTERNAL-VCAM.md",
-      "bytes": 8828,
-      "sha256": "40be041901ef608cdca227d8006cbaf5653eea92a21b9978710a239ed5051728"
+      "bytes": 11622,
+      "sha256": "86aa5cd85b0f20c1fb9af8fbdbbe28c661b2a8dc760c08b32d42cfb5db42eeea"
     },
     {
       "path": "GITHUB-LIVECONTAINER.md",
@@ -125,8 +125,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 23018,
-      "sha256": "b6409391834f898054bba5d2236cfbe344f3d69338e368095b4ae0eb0232ce91"
+      "bytes": 23334,
+      "sha256": "cb6a63366de34ac0f2811d6d28d8b0949b87fc1d333fc334eddbfee1cbf4bec2"
     },
     {
       "path": "scripts/build-ios.sh",
@@ -149,6 +149,11 @@
       "sha256": "53d3510a16cc127149fdd862d0a37843e77a4e24fe5baa6f92318f2d7c3bd3f9"
     },
     {
+      "path": "validation/external-obs-content-observation.json",
+      "bytes": 1144,
+      "sha256": "ef4611698fdfac2de252b8c0b453738def69029da1e75a1740da0c860ef7acf4"
+    },
+    {
       "path": "validation/pattern-inspector-synthetic.json",
       "bytes": 440,
       "sha256": "f5ae0808c0cc5cabac37c8a7314c22691d854285cbc94de38a6c29a70c3f21ce"
@@ -157,6 +162,21 @@
       "path": "validation/phone-camera-1080-v3.json",
       "bytes": 1372,
       "sha256": "f2cef06d24e06852de26ed3ed95f576edfde80d0a15e7a2b356b038c1e1d2ba9"
+    },
+    {
+      "path": "validation/phone-external-obs-1080-first-gap-v1.json",
+      "bytes": 1285,
+      "sha256": "4fae8686bfdd2934683cab1781af2776c0fa8f829828f612f7eeab79d7257c7b"
+    },
+    {
+      "path": "validation/phone-external-obs-1080-warm-v1.json",
+      "bytes": 1265,
+      "sha256": "f2679061caf67716b93c5191064c4eb19d9e7a3e6eb50d3ce756f0184824d801"
+    },
+    {
+      "path": "validation/phone-external-obs-720-v1.json",
+      "bytes": 1217,
+      "sha256": "1033c98ab1f5d98b8cf4bf979d29fceb47f00bd68cfb523bfc4195bb18d0fcc1"
     },
     {
       "path": "validation/phone-external-pattern-720-v1.json",
@@ -179,6 +199,21 @@
       "sha256": "03dd379d6be98c9ef83b3c9a113f735c33e5a265e28bc99af23d97d6e5e87bf5"
     },
     {
+      "path": "validation/sender-startup-and-recovery.json",
+      "bytes": 1703,
+      "sha256": "3ac07ab2f76792744d548fe58100c1435ac843914b23c58896b880c637de550c"
+    },
+    {
+      "path": "validation/warm-sender-two-client-1080-sustained.json",
+      "bytes": 2143,
+      "sha256": "82a5be54e8bef74a872228132686027d93502209f6443ecdcfbd22f79bc49557"
+    },
+    {
+      "path": "validation/warm-sender-two-client-1080.json",
+      "bytes": 2139,
+      "sha256": "75559be579471e475a67e08fb2faa612d2c3120071742a1fc61f0af6e8340a15"
+    },
+    {
       "path": "windows/bridge.py",
       "bytes": 8491,
       "sha256": "23db5dbf4667ce6017acaacb92a3acd57ae98064ae7c356f2660e939e3e1946d"
@@ -199,18 +234,29 @@
       "sha256": "e749cf4fa80febf2a38bb19c8083f915d18d30e578402fad0e7a8d28df89caf2"
     },
     {
+      "path": "windows/check_warm_bridge.py",
+      "bytes": 5667,
+      "sha256": "a882339def644594250d5bfdd21053c55f04399829aa19f80dcd273e9877d99d"
+    },
+    {
       "path": "windows/test_wire.py",
       "bytes": 1832,
       "sha256": "fabaeafc68c2feb3cae4e4736cf805d33cc69de5feb55c195d063c18d1e527eb"
     },
     {
+      "path": "windows/warm_bridge.py",
+      "bytes": 7636,
+      "sha256": "bf6059085332e8881dec884830f17278fbda810c1ce1f40beaae037d5b0cdf66"
+    },
+    {
       "path": "windows/wire.py",
-      "bytes": 2860,
-      "sha256": "5c10ad1a329dff5c78d01827fb34b896c91c9af1f2f04891986733bf21e9068d"
+      "bytes": 2876,
+      "sha256": "460d24753406626a825aaec0d59c1fc96b3cad738bbe156f10e473a4c5cfb7a7"
     }
   ],
   "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
   "source_build_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
   "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings.",
-  "external_hook": "Local signing and external load passed; Real camera/Pattern callback replacement and900-frame720 return verified; source stamps538..1437 distinct/consecutive; raw-luma fidelity failed; external OBS pending"
+  "external_hook": "Local signing and external load passed; Real camera callback replacement with Pattern and actual OBS verified.720/1080 encoded return900frames each; latest1080 29.99998FPS,maxPTS interval35.466ms,full decode without errors. Pattern source stamps538..1437 distinct/consecutive; raw-luma fidelity failed.",
+  "pc_sender": "Persistent warm encoder; live IDR join; bounded8-AU queue; native AnnexB scan. Two PC clients each900frames decoded using one encoder process. Initial1080 gap report retained."
 }

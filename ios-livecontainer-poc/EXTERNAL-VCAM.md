@@ -55,7 +55,7 @@ Keep the existing loopback MediaMTX server and OBS output running:
 `rtmp://127.0.0.1:1936/live`, key `obs`, H.264, 30 FPS, keyframe interval1s. Begin with720×1280; raise to1080×1920 after the external path works.
 
 ```powershell
-python windows/bridge.py send --input rtmp://127.0.0.1:1936/live/obs --bind 192.168.50.39 --port 9002 --width 720 --height 1280 --bitrate 4M --ffmpeg C:/ffmpeg/bin/ffmpeg.exe
+python windows/warm_bridge.py --input rtmp://127.0.0.1:1936/live/obs --bind 192.168.50.39 --port 9002 --width 1080 --height 1920 --fps 30 --bitrate 6M --ffmpeg C:/ffmpeg/bin/ffmpeg.exe
 python windows/bridge.py receive --bind 192.168.50.39 --port 9001 --output capture/external-pattern/return.h264 --frames 900
 ```
 
@@ -67,10 +67,30 @@ No panel: inspect tweak folder assignment, enabled switch, local signing error, 
 
 For a successful test retain numeric mode/counter observations, capture SHA256, dimensions, full-decode result, PTS/sequence analysis and proof of source content. Raw real-camera/OBS desktop captures remain local and must not be uploaded to the source repository.
 
-Build passed [Actions 38133205057](https://github.com/Sweige/OpenAI/actions/runs/38133205057), commit `843b223ffc258b987b95d0ad6aa7850708a84167`, using Xcode26.6 / SDK26.5, minimumiOS18. The standalone136,848-byte dylib has SHA256 `1f45abd81c351c2169923365cecca46b48221d069e7fdd7a3e536ffaac900d34`; independent inspection against the existing v4 IPA confirmed it is absent. USB copy and readback passed. **The user reports local signing succeeded and the VCAM Lab panel appears after restarting the guest. External code execution is established by that operator observation; the user also confirms host Real camera / plugin Pattern, and the PC received and fully decoded900720×1280 frames at29.99895 FPS. All900 source stamps were distinct and consecutive (538→1437). External OBS mode is still pending. Raw gray levels changed and color fidelity is not passed.**
+Build passed [Actions 38133205057](https://github.com/Sweige/OpenAI/actions/runs/38133205057), commit `843b223ffc258b987b95d0ad6aa7850708a84167`, using Xcode26.6 / SDK26.5, minimumiOS18. The standalone136,848-byte dylib has SHA256 `1f45abd81c351c2169923365cecca46b48221d069e7fdd7a3e536ffaac900d34`; independent inspection against the existing v4 IPA confirmed it is absent. USB copy and readback passed. **The user reports local signing succeeded and the VCAM Lab panel appears after restarting the guest. External code execution is established by that operator observation; the user also confirms host Real camera / plugin Pattern, and the PC received and fully decoded900720×1280 frames at29.99895 FPS. All900 source stamps were distinct and consecutive (538→1437). External OBS720 and1080 returns subsequently passed; latest1080 has900 frames /29.99998FPS /maximum PTS interval35.466ms. See numeric validation reports. Raw gray levels changed and color fidelity is not passed.**
 
 For a Pattern capture, `python windows/check_hook_pattern.py capture/external-pattern/return.h264 --report capture/pattern-proof.json` checks the seven luma columns and changing binary counter in decoded return frames. Use FFmpeg/FFprobe on PATH or pass their executable paths. Keep the host in Real camera and record external-load/counter observations separately. Content matching alone does not establish how the module was loaded.
 
 A successful self-owned test would establish external application-local camera callback replacement under this LiveContainer setup; applying it to another authorized App requires its own capture/preview/encoder integration assessment.
 
 Pattern checker now reports raw-luma preservation separately from seven-column geometry and all-frame binary-counter progression. The first strict raw-luma report failed and is retained; identity checking is not a color-fidelity claim. Numeric evidence is in `validation/phone-external-pattern-720-v1.json` and `validation/phone-external-pattern-content-v1.json`.
+
+
+## OBS return / warm sender results (2026-10-11)
+
+The user kept the host on Real camera while the independent external plugin received OBS on9002.720 return:900 frames,30.00007FPS, full decode without errors. Latest1080 return:900 frames,29.966683s,29.99998FPS, no B frames or sequence gaps, monotonic PTS, maximum PTS interval35.466ms, full decode without errors. User confirms picture and scene switching. Return content samples were inspected locally; captures/images were not added to the repository.
+
+Initial1080 plugin retries coincided with the old per-connection FFmpeg cold first-AU time7.89s (720:8.30s), beyond the plugin's3s receive timeout. `warm_bridge.py` starts encoding before clients join; new clients begin at the next live IDR with repeated SPS/PPS. The client queue is bounded to8AUs; overflow disconnects rather than retaining unlimited old content. Wait for `Warm encoder ready` before connecting. The initial warm sender produced a900-frame phone return with one5.266716s PTS gap; RTMP reader-too-slow / input I/O errors were observed. `wire.py` now scans Annex-B start codes using native regex instead of a Python byte/slice loop. Existing5 protocol tests passed; two PC OBS1080 client sessions each decoded900 frames with one encoder process. Latest phone capture passed the timing result above. These combined changes do not establish a unique cause for every historical failure.
+
+Reports: `validation/phone-external-obs-720-v1.json`, `phone-external-obs-1080-first-gap-v1.json` (retained failure to meet continuous frame rate), `phone-external-obs-1080-warm-v1.json`, `sender-startup-and-recovery.json`, `warm-sender-two-client-1080-sustained.json`. Latest phone capture SHA256: `6569cf416d2fab17aafc253d2ff52a56589b13b83aa794003b7d35718fce33f9`.
+
+PC regression from this source directory:
+
+```powershell
+python -m unittest discover -s windows -p test_wire.py -v
+python windows/check_warm_bridge.py --ffmpeg C:/ffmpeg/bin/ffmpeg.exe --ffprobe C:/ffmpeg/bin/ffprobe.exe --frames 900 --output-dir capture/warm-check --report capture/warm-check/result.json
+```
+
+This check needs the local OBS RTMP stream already running, or add `--test-pattern`. It uses loopback TCP and closes its own two-client encoder after completion. Loopback is not phone compatibility or end-to-end latency proof. The phone host and plugin binaries did not change in this repair.
+
+Next priorities: source-stamped15–30min stability / recovery / thermal tests, quantitative latency measurement, and audio with a common clock. Unique OBS source-frame identity, color fidelity, audio, cross-App injection and Douyin livestream remain unverified.

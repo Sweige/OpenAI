@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-11",
+  "phone_receiver_timeout_seconds": 3,
+  "measured_original_cold_encoder": [
+    {
+      "first_byte_seconds": 7.875,
+      "first_AU_seconds": 7.889999999999418,
+      "read_bytes": 105017,
+      "first_AU_bytes": 90723,
+      "first_AU_is_key": true,
+      "width": 1080,
+      "height": 1920
+    },
+    {
+      "first_byte_seconds": 8.281999999999243,
+      "first_AU_seconds": 8.296999999998661,
+      "read_bytes": 75295,
+      "first_AU_bytes": 60708,
+      "first_AU_is_key": true,
+      "width": 720,
+      "height": 1280
+    }
+  ],
+  "interpretation": "Measured cold first complete AU exceeds phone receive timeout. This explains a reproducible timeout risk, not every historical failure.",
+  "first_warm_sender_phone_capture": {
+    "received": 900,
+    "pts_gap_us": 5266716,
+    "gap_after_packet": 662,
+    "fps": 25.539796670832107,
+    "report": "phone-external-obs-1080-first-gap-v1.json"
+  },
+  "other_observed_failure": "MediaMTX reader is too slow / too many reordered frames; FFmpeg RTMP demux I/O error",
+  "changes": [
+    "Persistent encoder before clients connect; join next live IDR with SPS/PPS",
+    "Per-client bounded8-AU queue; overflow disconnects rather than retaining unlimited backlog",
+    "Annex-B start-code scanning moved from Python byte/slice loop to native regex scan"
+  ],
+  "latest_phone_capture": "phone-external-obs-1080-warm-v1.json",
+  "causality_limit": "Warm-start removes the measured cold-start mismatch; optimized scanner plus warm sender passed latest capture. Unique cause of every prior interruption not established.",
+  "ios_plugin_rebuilt": false,
+  "host_ipa_rebuilt": false
+}
