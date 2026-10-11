@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-11",
+  "source": "own iPhone app uplink received on TCP 9001",
+  "file_sha256": "4e945c0287187fe2b34026b7ed740ff855f21ecc5517e3cf252cea7a3c6fdeb4",
+  "bytes": 11342842,
+  "encoded_packets": 900,
+  "key_packets": 30,
+  "sequence_missing_packets": 0,
+  "pts_monotonic": true,
+  "pts_span_seconds": 29.966417,
+  "fps_from_original_pts": 30.000249946465072,
+  "fps_from_arrival_interval": 30.044783102733774,
+  "pts_delta_us": {
+    "min": 27134,
+    "median": 33333,
+    "p95": 35416,
+    "max": 39817
+  },
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "profile": "Baseline",
+        "width": 1080,
+        "height": 1920,
+        "has_b_frames": 0,
+        "pix_fmt": "yuv420p",
+        "nb_read_frames": "900"
+      }
+    ]
+  },
+  "full_decode_exit_code": 0,
+  "full_decode_errors": "",
+  "limits": [
+    "video only",
+    "local receive timing is not end-to-end latency",
+    "short functional sample is not a long-term stability test",
+    "source identity on phone depends on user-selected OBS network",
+    "Output cadence does not establish 900 unique upstream source pictures or measured scene-switch latency"
+  ],
+  "input_source": "OBS network selected by user; real OBS preview and switching confirmed by user",
+  "app_build": "4",
+  "app_source_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
+  "device_scope": "Device reported iPhone12,1 / iOS 27.0 / 24A5424a; system identity not independently attested",
+  "capture_end": "Completed the configured 900-picture cap; expected disconnect"
+}

@@ -9,8 +9,8 @@
     "USB_copy": "v1 own IPAs and v2 diagnostic IPA copied to separate folders; phone read-back SHA256 verified",
     "encoder_v3": "CI passed 38130806628; USB hash verified; real-camera 1080 return: 613 received/decoded frames, no errors",
     "OBS_preview": "User reported real OBS 720/1080 previews and scene switching passed; 1080 uplink not passed",
-    "network_v4": "Automatic network retry and input-only reconnect; build/phone test pending",
-    "phone_OBS_1080_return": "Not yet passed; preview confirmed by user, v3 source stopped before encoding"
+    "network_v4": "CI 38131505181 and USB readback passed; user RX/TX passed; 900 OBS 1080 frames received/full-decoded, 30.00025 FPS, no errors",
+    "phone_OBS_1080_return": "Passed short video functional sample; no audio or end-to-end latency/thermal validation"
   },
   "files": [
     {
@@ -35,8 +35,8 @@
     },
     {
       "path": "GITHUB-LIVECONTAINER.md",
-      "bytes": 10001,
-      "sha256": "fad78fbbe741ba35b60a11270ad073ae61ed51c2a916408f01cb22559674be28"
+      "bytes": 11576,
+      "sha256": "41cf215ef33f8f0ac82d466b58b8f065977ba0e2e12dc7bb0bf969eb8cf83b01"
     },
     {
       "path": "ios/ContainerSmoke/main.m",
@@ -105,8 +105,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20406,
-      "sha256": "c3621acb81e1a3b7c0a24f188b867c71a3b7420bf9b467bd8fb558daf298c62f"
+      "bytes": 22198,
+      "sha256": "24439079453e4732b196767212a7a6571609bad0642e03047a81e2092c8a7c93"
     },
     {
       "path": "scripts/build-ios.sh",
@@ -127,6 +127,11 @@
       "path": "validation/phone-camera-1080-v3.json",
       "bytes": 1372,
       "sha256": "f2cef06d24e06852de26ed3ed95f576edfde80d0a15e7a2b356b038c1e1d2ba9"
+    },
+    {
+      "path": "validation/phone-obs-1080-v4.json",
+      "bytes": 1650,
+      "sha256": "0c2555243c99d922bdd290e21885f8ff4f73c47b4d2bbaf77aae6faed60ba6e6"
     },
     {
       "path": "validation/phone-return-720-v2.json",
@@ -160,5 +165,6 @@
     }
   ],
   "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
-  "layout_note": "This manifest covers files included under ios-livecontainer-poc in the GitHub checkout; the local source ZIP also contains historical Windows validation captures."
+  "source_build_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
+  "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings."
 }

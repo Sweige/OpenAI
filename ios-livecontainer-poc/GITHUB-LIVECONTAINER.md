@@ -1,12 +1,22 @@
 # 无 Mac：GitHub Actions → LiveContainer 自研测试
 
+## 最新实机结果（2026-10-11，v4）
+
+**OBS → iPhone 自研 App → 电脑的 1080×1920 视频回传已取得实际码流验证。**用户确认 v4 网络画面恢复、RX/TX 增加；电脑接收 900 个编码画面并逐帧完整解码：H.264 Baseline、无 B 帧，PTS 严格递增、序号无缺口，29.966417 秒、平均 30.00025 FPS，解码退出码 0、错误日志为空。码流 11,342,842 字节，SHA-256 `4e945c0287187fe2b34026b7ed740ff855f21ecc5517e3cf252cea7a3c6fdeb4`。
+
+v4 [Actions 38131505181](https://github.com/Sweige/OpenAI/actions/runs/38131505181) 成功，源码提交 `eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5`；IPA build 4、103,458 字节，手机回读校验通过。设备返回 `iPhone12,1 / iOS 27.0 / 24A5424a`，未独立鉴定系统版本，也不是最初要求的 iPhone 15/16/17。
+
+这是约 30 秒的视频功能验证。固定输出调度可能重复输入帧，统计不等于 900 个唯一源帧或端到端延迟。场景同步是用户观察；尚未测编码后切场景延迟、音频、音画同步和长期热稳定性。没有测试第三方 VCAM tweak、修改版抖音或官方原版抖音。
+
+此前出现空连接退出、输入发送超时和 source age 增长；v3 隔离编码队列，v4 增加输入恢复后本轮通过。具体最初触发原因尚未确认，不把本次成功归因于某一个改动。以下开发过程中的待测/失败状态以本段和对应 JSON 的最新结果为准。
+
 ## v4 网络恢复更新（2026-10-11）
 
 v3 的真实摄像头 1080 编码回传已取得实际结果：613 帧、1080×1920、H.264 Baseline、无 B 帧、20.400016 秒、平均 29.99998 FPS、PTS 递增、序号连续，整段解码无错误。接收在 613 帧时读到 EOF，未达到原计划 900 帧；原因未确认。此段只证明真实摄像头输入的编码能力，不能算作 OBS 回传。
 
 v3 网络输入失败时，用户观察到 Encoder ready / awaiting first frame，source age 持续增长、ENC pending=0、RX 不再增加。电脑记录输入发送连接超时。这证明本次后续没有新源帧进入编码器；尚未确定最初中断由初始化暂停、网络故障或其他因素造成。
 
-v4 加入网络 EOF/错误后的自动重连（退避 0.5–5 秒）、Reconnect network only 按钮，保留已初始化的编码器、输出时钟和预览管线；RX 状态与解码错误独立持久显示。每次 PC 新连接从新 FFmpeg 会话的 IDR/SPS/PPS 开始。用户主动 Stop 或 Connect 会使旧重连任务失效。v4 构建与实机 OBS 1080 回传验证待执行。
+v4 加入网络 EOF/错误后的自动重连（退避 0.5–5 秒）、Reconnect network only 按钮，保留已初始化的编码器、输出时钟和预览管线；RX 状态与解码错误独立持久显示。每次 PC 新连接从新 FFmpeg 会话的 IDR/SPS/PPS 开始。用户主动 Stop 或 Connect 会使旧重连任务失效。v4 随后编译成功并实收 900 帧 OBS 1080 回传，详见本页最新结果和 validation/phone-obs-1080-v4.json。
 
 ## v3 编码器诊断更新（历史过程，2026-10-11）
 
@@ -18,7 +28,7 @@ v3 将全部编码器初始化、提交与清理迁至独立串行队列；最�
 
 电脑 receiver 已修复“空连接断开后退出”：没有收到任何完整包时继续监听下一连接。实际 TCP + FFmpeg 回归验证 720/1080 各 60 帧通过，见 validation/empty-uplink-reconnect.json。该项是 Windows 回环，独立于手机编码器验证。
 
-当前状态：两个自研测试 App 及 v2 已编译打包、复制到手机并回读校验通过。**用户确认 JIT-less、ContainerSmoke、v2 真实摄像头与网络测试图均正常；电脑实收并完整解码 900 帧手机回传，720×1280、约 30.00 FPS、PTS 递增、序号无缺口、无解码错误。真实 OBS 场景及切换已由用户确认；1080 编码回传仍待排障。**
+当前状态：两个自研测试 App 及 v2 已编译打包、复制到手机并回读校验通过。**用户确认 JIT-less、ContainerSmoke、v2 真实摄像头与网络测试图均正常；电脑实收并完整解码 900 帧手机回传，720×1280、约 30.00 FPS、PTS 递增、序号无缺口、无解码错误。真实 OBS 场景及切换已由用户确认；v4 的 OBS 1080 编码回传已验证，详见本页最新结果。**
 
 诊断版 v2：提交 `a2f1869c9abd406ca1c4e8b35046186575e5b741`，[Actions run 38128825896](https://github.com/Sweige/OpenAI/actions/runs/38128825896) 已构建成功，产物摘要匹配并已复制到手机、回读一致。手机目录为 `我的 iPhone → LiveContainer → OBSiPhoneLab-Camera-v2-a2f1869`，文件名 `OBSiPhoneLab-CameraDiagnostics-v2.ipa`；本地对应 `../LiveContainer-build-2/OBSiPhoneLab-LiveContainer.ipa`。新版持久显示 Camera auth、session running/interrupted、CAM frames 与 runtime error，提供 Retry camera 按钮。用户按新版步骤重试后相机显示正常；尚不能单独确定旧版黑屏根因。导入同名测试 App 时选择更新，启动后检查 Camera diagnostics v2 字样。
 
