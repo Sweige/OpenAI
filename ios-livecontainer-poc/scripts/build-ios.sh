@@ -47,4 +47,20 @@ done
 
 python3 scripts/inspect_ipa.py artifacts/ContainerSmoke-LiveContainer.ipa artifacts/OBSiPhoneLab-LiveContainer.ipa \
   > artifacts/ipa-manifest.json
-shasum -a 256 artifacts/*-LiveContainer.ipa > artifacts/SHA256SUMS.txt
+
+# Standalone external tweak. It is deliberately absent from both IPA payloads.
+sdk_path="$(xcrun --sdk iphoneos --show-sdk-path)"
+xcrun --sdk iphoneos clang \
+  -arch arm64 -isysroot "$sdk_path" -miphoneos-version-min=18.0 \
+  -dynamiclib -fobjc-arc -fblocks -Wall -Wextra -Werror \
+  -Wl,-headerpad,0x4000 \
+  -install_name @rpath/OBSCaptureHook.dylib \
+  -framework Foundation -framework UIKit -framework AVFoundation \
+  -framework CoreMedia -framework CoreVideo -framework VideoToolbox -framework QuartzCore \
+  ios/OBSCaptureHook/CaptureHook.m ios/OBSCaptureHook/NetworkSource.m \
+  -o artifacts/OBSCaptureHook.dylib 2>&1 | tee artifacts/OBSCaptureHook-build.log
+file artifacts/OBSCaptureHook.dylib > artifacts/OBSCaptureHook-binary.txt
+otool -L artifacts/OBSCaptureHook.dylib >> artifacts/OBSCaptureHook-binary.txt
+python3 scripts/inspect_hook.py artifacts/OBSCaptureHook.dylib artifacts/OBSiPhoneLab-LiveContainer.ipa \
+  > artifacts/OBSCaptureHook-manifest.json
+shasum -a 256 artifacts/*-LiveContainer.ipa artifacts/OBSCaptureHook.dylib > artifacts/SHA256SUMS.txt

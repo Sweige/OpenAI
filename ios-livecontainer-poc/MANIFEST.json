@@ -34,6 +34,11 @@
       "sha256": "f6ec6285d6192ce4fec284fed7c33fe3613d2430609dbd75dff5304d695abc5a"
     },
     {
+      "path": "EXTERNAL-VCAM.md",
+      "bytes": 5728,
+      "sha256": "bcf6459e4e954c73ba88f32840e0be686baa934e60225fe4278b3c1d13d1cea4"
+    },
+    {
       "path": "GITHUB-LIVECONTAINER.md",
       "bytes": 11576,
       "sha256": "41cf215ef33f8f0ac82d466b58b8f065977ba0e2e12dc7bb0bf969eb8cf83b01"
@@ -42,6 +47,21 @@
       "path": "ios/ContainerSmoke/main.m",
       "bytes": 4908,
       "sha256": "d3ba872264aafff90e509b0f992c1ef1bd338e1d3bb596500cadc42a61603140"
+    },
+    {
+      "path": "ios/OBSCaptureHook/CaptureHook.m",
+      "bytes": 12979,
+      "sha256": "a973b27c296f9c376fab15f68636768503a8bac21f80c6844bb66879cc24f029"
+    },
+    {
+      "path": "ios/OBSCaptureHook/NetworkSource.h",
+      "bytes": 418,
+      "sha256": "5c30e1d8ae826b8753ad09e695256658861e371ad2dcc2a7188ad06c8d0b3696"
+    },
+    {
+      "path": "ios/OBSCaptureHook/NetworkSource.m",
+      "bytes": 10301,
+      "sha256": "a9e7b8c72194d6f46fcc42db5733a5ecd8bb27f12be9362020828f6d7c6c9338"
     },
     {
       "path": "ios/OBSiPhoneLab/Camera.swift",
@@ -110,8 +130,13 @@
     },
     {
       "path": "scripts/build-ios.sh",
-      "bytes": 1547,
-      "sha256": "25af2ec3216ef777fe0acfd769663a017adea08c42a7b7545bcb74e4c80ac3e8"
+      "bytes": 2549,
+      "sha256": "e7dcf8aeb226c8bb12fff6fd5b0462677df9910cf14afb31b63b5845f44cbfc4"
+    },
+    {
+      "path": "scripts/inspect_hook.py",
+      "bytes": 2453,
+      "sha256": "1913ab72758f4f417253f047ce3aa310d63f90690e674b029df2f4867815ff55"
     },
     {
       "path": "scripts/inspect_ipa.py",
@@ -166,5 +191,6 @@
   ],
   "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
   "source_build_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
-  "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings."
+  "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings.",
+  "external_hook": "Independent OBSCaptureHook.dylib for own OBSiPhoneLab only; phone validation pending"
 }

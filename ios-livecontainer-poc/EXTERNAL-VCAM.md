@@ -1,0 +1,64 @@
+# External VCAM experiment — own App only
+
+This experiment reuses the existing OBSiPhoneLab v4 host and loads **OBSCaptureHook.dylib separately through LiveContainer**. The dylib is not embedded in either IPA. It activates only for bundle `com.example.OBSiPhoneLab` and the Objective-C runtime delegate class `OBSiPhoneLab.Camera`.
+
+This is an application-local callback replacement experiment. It does not create a system camera, modify an official Douyin installation, authenticate the device-reported OS version, or establish audio/long-term performance.
+
+## Architecture
+
+Real camera → AVCaptureVideoDataOutput → external delegate proxy → original Camera callback → existing preview/normalizer/encoder → PC :9001.
+
+Proxy modes:
+
+- **Off**: pass real camera samples unchanged.
+- **Pattern**: NV12 luma bars, moving bright band and binary frame stamp. Preserve camera PTS and duration.
+- **OBS**: independent OBSC/1 receiver on PC **9002**, VideoToolbox hardware decode, retain only latest pixel buffer, preserve camera timing in a newly created CMSampleBuffer. Source older than 500 ms is dropped; it does not silently revert to the real camera.
+
+Camera remains physically active and drives callbacks. At present the host normalizer assigns its own 30 Hz encoding timestamps, so preserving callback timestamps is not evidence of network clock / audio synchronization. No audio is transported.
+
+## Build
+
+Run on macOS with Xcode and XcodeGen:
+
+```bash
+bash scripts/build-ios.sh
+```
+
+Artifacts include the two existing IPAs, independent dylib, compiler logs, Mach-O inspection and hashes. No Apple credentials are used in CI. LiveContainer signs imported tweaks locally with the certificate the user already imported.
+
+## LiveContainer 3.8.10 setup
+
+Source audited at `LiveContainerMirror/LiveContainer` commit `4dbe0f9a626de801184a42c0be8d2cb105058e3d`:
+
+- [Tweak manager](https://github.com/LiveContainerMirror/LiveContainer/blob/4dbe0f9a626de801184a42c0be8d2cb105058e3d/LiveContainerSwiftUI/Views/LCTweaksView.swift): creates folders, imports dylib/framework, adds rpath, supports signing; comments specify signing before App launch.
+- [Loader](https://github.com/LiveContainerMirror/LiveContainer/blob/4dbe0f9a626de801184a42c0be8d2cb105058e3d/TweakLoader/TweakLoader.m): loads selected `LCTweakFolder` using `dlopen(RTLD_LAZY | RTLD_GLOBAL)`; `.disabled` files are skipped.
+
+1. Exit OBSiPhoneLab completely. In LiveContainer's Tweaks tab create folder **OBSiPhoneLab-VCAM**.
+2. Open that folder, use + → Import tweak to select our standalone dylib from Files. Keep it enabled; use the signature button if offered. Do not import into the global root folder.
+3. In OBSiPhoneLab's application settings select this folder as its tweak folder. Tweak injection must be enabled. Restart the guest App.
+4. An in-window panel titled **VCAM Lab · external dylib** should appear, default **Off**. It can be dragged by its title or collapsed using ±. The panel itself is UI, not encoded video.
+5. Host: enter PC IP, choose resolution, tap Connect then **Real camera** / Retry camera. The plugin's **wrapped** count must be ≥1 and callbacks must rise before replacement testing.
+6. Keep host in **Real camera**. Select Pattern in plugin. Only the grayscale pattern is expected in host preview. Off returns to real camera. Start host return → verify PC decoded stream.
+7. Start the independent PC sender on 9002. In plugin enter PC IP and tap **OBS :9002**; keep host in **Real camera**. NET / replaced and host CAM / TX must rise. Switch an OBS scene and verify return video on PC.
+
+The App's built-in `OBS network` source / `RX decoded` is not used as evidence for this experiment. Existing port9000 receiver may reconnect independently; port9002 prevents conflict. Backgrounding stops reception and resets plugin mode Off.
+
+## PC commands (PowerShell, from the source directory)
+
+Keep the existing loopback MediaMTX server and OBS output running:
+`rtmp://127.0.0.1:1936/live`, key `obs`, H.264, 30 FPS, keyframe interval1s. Begin with720×1280; raise to1080×1920 after the external path works.
+
+```powershell
+python windows/bridge.py send --input rtmp://127.0.0.1:1936/live/obs --bind 192.168.50.39 --port 9002 --width 720 --height 1280 --bitrate 4M --ffmpeg C:/ffmpeg/bin/ffmpeg.exe
+python windows/bridge.py receive --bind 192.168.50.39 --port 9001 --output capture/external-pattern/return.h264 --frames 900
+```
+
+These are two separate PC terminals/processes. The phone runs only OBSiPhoneLab. Receive exits after900frames; restart with a new output directory for each mode. Starting return on an already initialized host encoder reconnects its existing uplink.
+
+## Failure boundaries / evidence
+
+No panel: inspect tweak folder assignment, enabled switch, local signing error, dlopen error, bundle ID. Panel but wrapped0: choose Real camera and Retry; investigate runtime delegate class before changing any allowlist. Wrapped/callbacks rise but replaced0: check mode; OBS requires NET decoded and fresh source. Replaced rises but TX0: isolate using Pattern and inspect host encoder; callbacks alone do not prove successful encoding.
+
+For a successful test retain numeric mode/counter observations, capture SHA256, dimensions, full-decode result, PTS/sequence analysis and proof of source content. Raw real-camera/OBS desktop captures remain local and must not be uploaded to the source repository.
+
+At initial implementation **build and phone runtime validation are pending**. A successful self-owned test would establish external application-local camera callback replacement under this LiveContainer setup; applying it to another authorized App requires its own capture/preview/encoder integration assessment.
