@@ -34,7 +34,7 @@ Source audited at `LiveContainerMirror/LiveContainer` commit `4dbe0f9a626de80118
 - [Loader](https://github.com/LiveContainerMirror/LiveContainer/blob/4dbe0f9a626de801184a42c0be8d2cb105058e3d/TweakLoader/TweakLoader.m): loads selected `LCTweakFolder` using `dlopen(RTLD_LAZY | RTLD_GLOBAL)`; `.disabled` files are skipped.
 
 1. Exit OBSiPhoneLab completely. In LiveContainer's Tweaks tab create folder **OBSiPhoneLab-VCAM**.
-2. Open that folder, use + → Import tweak to select our standalone dylib from Files. Keep it enabled; use the signature button if offered. Do not import into the global root folder.
+2. Open that folder, use + → Import tweak to select our standalone dylib from Files. Keep it enabled and explicitly tap the **Sign / signature** toolbar button; wait for signing to finish. Do not import into the global root folder. If an earlier copy exists at the global root, disable that copy so its load error does not persist. If no signing button is shown, check LiveContainer's already-imported local certificate; do not export it to the PC or CI.
 3. In OBSiPhoneLab's application settings select this folder as its tweak folder. Tweak injection must be enabled. Restart the guest App.
 4. An in-window panel titled **VCAM Lab · external dylib** should appear, default **Off**. It can be dragged by its title or collapsed using ±. The panel itself is UI, not encoded video.
 5. Host: enter PC IP, choose resolution, tap Connect then **Real camera** / Retry camera. The plugin's **wrapped** count must be ≥1 and callbacks must rise before replacement testing.
@@ -42,6 +42,12 @@ Source audited at `LiveContainerMirror/LiveContainer` commit `4dbe0f9a626de80118
 7. Start the independent PC sender on 9002. In plugin enter PC IP and tap **OBS :9002**; keep host in **Real camera**. NET / replaced and host CAM / TX must rise. Switch an OBS scene and verify return video on PC.
 
 The App's built-in `OBS network` source / `RX decoded` is not used as evidence for this experiment. Existing port9000 receiver may reconnect independently; port9002 prevents conflict. Backgrounding stops reception and resets plugin mode Off.
+
+### Observed signing failure (2026-10-11)
+
+The user reported `dlopen(.../Documents/Tweaks/OBSCaptureHook.dylib): missing code signature`. This establishes that the root-folder copy exists but cannot be loaded due to its missing signature; it does not establish a callback-replacement failure. CI intentionally supplies an unsigned dylib. The earlier instruction that manual signing was optional was insufficient for this setup.
+
+The audited [LCAppModel.signApp](https://github.com/LiveContainerMirror/LiveContainer/blob/4dbe0f9a626de801184a42c0be8d2cb105058e3d/LiveContainerSwiftUI/Models/LCAppModel.swift) returns before both per-app and global tweak signing when `appInfo.tweakFolder` is nil. Whether that exact guard was reached on this phone is not yet verified. [LCUtils.signTweaks](https://github.com/LiveContainerMirror/LiveContainer/blob/4dbe0f9a626de801184a42c0be8d2cb105058e3d/LiveContainerSwiftUI/Utilities/LCUtilsExtensions.swift) requires a locally available certificate and signs matching dylibs via ZSign. Bind the per-app folder, explicitly sign there and disable the earlier global copy before retrying. No IPA rebuild is currently indicated.
 
 ## PC commands (PowerShell, from the source directory)
 

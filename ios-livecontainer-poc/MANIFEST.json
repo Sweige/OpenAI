@@ -35,8 +35,8 @@
     },
     {
       "path": "EXTERNAL-VCAM.md",
-      "bytes": 6568,
-      "sha256": "afdb43aab58a04c8b385a2a48592026ff70f7c2d7ec71bec4c64e383badb416a"
+      "bytes": 8002,
+      "sha256": "3f329872f6ce91af155f7a9dee2e4e126e75b85c23225f91fdc7fff951cd20fb"
     },
     {
       "path": "GITHUB-LIVECONTAINER.md",
@@ -197,5 +197,5 @@
   "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
   "source_build_commit": "eb3b1df0a97d6d98c9f3b1c85d942382ac279ce5",
   "layout_note": "Repository includes source and JSON evidence; local source ZIP additionally includes original synthetic Windows-loopback validation files. File hashes describe this working copy; Git may normalize text line endings.",
-  "external_hook": "Independent OBSCaptureHook.dylib: Actions38133205057 success; USB hash passed; phone external load and replacement pending"
+  "external_hook": "Actions38133205057 success; USB hash passed; root copy dlopen failed: missing code signature; per-app local signing fix pending"
 }
