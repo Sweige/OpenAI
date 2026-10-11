@@ -56,7 +56,7 @@ xcrun --sdk iphoneos clang \
   -Wl,-headerpad,0x4000 \
   -install_name @rpath/OBSCaptureHook.dylib \
   -framework Foundation -framework UIKit -framework AVFoundation \
-  -framework CoreMedia -framework CoreVideo -framework VideoToolbox -framework QuartzCore \
+  -framework CoreMedia -framework CoreVideo -framework VideoToolbox -framework QuartzCore -framework CoreGraphics \
   ios/OBSCaptureHook/CaptureHook.m ios/OBSCaptureHook/NetworkSource.m \
   -o artifacts/OBSCaptureHook.dylib 2>&1 | tee artifacts/OBSCaptureHook-build.log
 file artifacts/OBSCaptureHook.dylib > artifacts/OBSCaptureHook-binary.txt

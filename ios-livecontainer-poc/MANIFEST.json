@@ -130,8 +130,8 @@
     },
     {
       "path": "scripts/build-ios.sh",
-      "bytes": 2549,
-      "sha256": "e7dcf8aeb226c8bb12fff6fd5b0462677df9910cf14afb31b63b5845f44cbfc4"
+      "bytes": 2573,
+      "sha256": "5741ff65f4b01fd5be1c402fd69b8b901896210f3529d56422a1743635c3546d"
     },
     {
       "path": "scripts/inspect_hook.py",
