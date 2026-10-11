@@ -2,7 +2,7 @@
 
 研究与实现日期：2026-10-11。用途：验证自己拥有代码和签名权限的 App 能否接收 OBS 视频、在摄像头与网络画面间切换、重新编码并回传。工程不修改抖音，不注册系统虚拟摄像头，也不使用屏幕共享。
 
-后续实机进展：iPhone 已连接 Windows，用户确认 LiveContainer 已安装并能进入应用列表。尚未编译或运行本工程的 iOS App。无 Mac 时，可按 [GitHub Actions / LiveContainer 测试说明](GITHUB-LIVECONTAINER.md) 构建 ContainerSmoke 和 OBSiPhoneLab；工作流及两个 IPA 的运行仍待验证。
+后续实机进展：iPhone 已连接 Windows，LiveContainer 已安装并能进入应用列表。ContainerSmoke 和 OBSiPhoneLab 已通过 GitHub Actions 的 macOS 构建，并通过 USB 复制到 LiveContainer 的文件目录、回读校验通过。**客体 App 启动与媒体运行仍待验证**。见 [GitHub Actions / LiveContainer 测试说明](GITHUB-LIVECONTAINER.md)。
 
 ## 实际验证范围
 
@@ -13,11 +13,12 @@
 | TCP 回传接收，逐字节比对 | 两个分辨率通过 |
 | TCP 回传 → FFmpeg RTMP → 本机监听器 | 720×1280、60 帧通过，见 validation/relay-results.json |
 | OBS 实际发布到 SRS / MediaMTX | 未运行；提供配置，服务器配置需按安装版本验证 |
-| Swift / Objective-C 编译、签名、iPhone 运行 | 未运行；当前环境只有 Windows，没有 Xcode 或 Mac；后续已连接 iPhone 并由用户确认安装 LiveContainer |
+| Swift / Objective-C 编译与 IPA 打包 | GitHub Actions 已通过；Xcode 26.6 / iPhoneOS SDK 26.5 / arm64 / Release；包含 ProbeKit framework |
+| LiveContainer 自研 IPA 导入、签名、iPhone 运行 | 两个 IPA 已通过 USB 复制到手机并回读验证；导入、签名、运行尚未验证 |
 | 音频、音画同步、长时间热稳定性 | 尚未实现 / 未验证 |
 | 抖音普通直播 | 不在此原型的已实现范围 |
 
-因此这是已验证 Windows 数据面的最小原型源码，不能称为已在 iOS 27 真机跑通的成品。Swift 源码已做静态检查，仍须执行下面的构建和真机实验。
+因此这是 Windows 数据面验证通过、iOS 编译打包通过的最小原型，不能称为已在 iOS 27 真机跑通的成品。仍须完成下面的真机实验。
 
 ## 结构与数据流
 

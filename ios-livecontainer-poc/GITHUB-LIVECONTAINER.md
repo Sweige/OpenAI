@@ -1,8 +1,12 @@
 # 无 Mac：GitHub Actions → LiveContainer 自研测试
 
-当前状态：用户确认 LiveContainer 已安装并可进入应用列表；客体 App 尚未测试。本目录提供构建源码和工作流，**还没有 GitHub macOS 构建成功或 iPhone 实机运行结果**。
+当前状态：LiveContainer 已安装并可进入应用列表。**两个自研测试 App 已在 GitHub macOS runner 编译打包成功，并通过 USB 复制到手机、回读校验通过；客体 App 启动与媒体功能尚未测试。**
 
-两个 App 均已采用 UIScene 生命周期，避免新版 SDK 构建后在 iOS 27 因旧生命周期无法启动。依据：[Apple 生命周期迁移说明](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle)。这项源码修改仍待编译与实机验证。
+首次构建：[Sweige/OpenAI Actions run 38121437811](https://github.com/Sweige/OpenAI/actions/runs/38121437811)。独立分支 `codex/ios-livecontainer-poc-20261011`，提交 `15b1c4c46edfa0a1d420ddeb1589afc3c1089d28`；没有合并 main。实际使用 Xcode 26.6（17F113）、iPhoneOS SDK 26.5、XcodeGen 2.46.0，部署目标 iOS 18.0。
+
+手机文件位置：`我的 iPhone → LiveContainer → OBSiPhoneLab-PoC-15b1c4c`。先导入 ContainerSmoke，再导入 OBSiPhoneLab。
+
+两个 App 均已采用 UIScene 生命周期，兼顾新版 SDK 的启动要求。依据：[Apple 生命周期迁移说明](https://developer.apple.com/documentation/uikit/transitioning-to-the-uikit-scene-based-life-cycle)。已编译通过，仍待实机运行验证。
 
 ## 两个测试 App
 
