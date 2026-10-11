@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-11",
+  "source": "own iPhone app uplink received on TCP 9001",
+  "file_sha256": "134df4db8127c9c356d50edb7a61a20646d551cd2f371d857afae77031ae7c82",
+  "bytes": 22542538,
+  "encoded_packets": 900,
+  "key_packets": 30,
+  "sequence_missing_packets": 0,
+  "pts_monotonic": true,
+  "pts_span_seconds": 29.964167,
+  "fps_from_original_pts": 30.00250265592232,
+  "fps_from_arrival_interval": 30.028726033803192,
+  "pts_delta_us": {
+    "min": 29983,
+    "median": 33350,
+    "p95": 34916,
+    "max": 36217
+  },
+  "ffprobe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "profile": "Baseline",
+        "width": 720,
+        "height": 1280,
+        "has_b_frames": 0,
+        "pix_fmt": "yuv420p",
+        "nb_read_frames": "900"
+      }
+    ]
+  },
+  "full_decode_exit_code": 0,
+  "full_decode_errors": "",
+  "limits": [
+    "video only",
+    "local receive timing is not end-to-end latency",
+    "short functional sample is not a long-term stability test",
+    "source identity on phone depends on user-selected OBS network"
+  ]
+}

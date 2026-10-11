@@ -1,0 +1,140 @@
+{
+  "created_on": "2026-10-11",
+  "updated_on": "2026-10-11",
+  "verification": {
+    "iOS_compile": "v2 passed GitHub Actions run 38128825896, Xcode 26.6 / SDK 26.5",
+    "iPhone_guest_runtime": "user reported ContainerSmoke launch and OBSiPhoneLab v1 network test pattern preview passed",
+    "camera_branch": "user reported v2 real camera and CAM frames normal; switching back to network preview passed",
+    "phone_encoding_return": "900 received/decoded frames, 720x1280 H264 Baseline, 30.0025 FPS from PTS, sequence continuous, no decode errors",
+    "USB_copy": "v1 own IPAs and v2 diagnostic IPA copied to separate folders; phone read-back SHA256 verified"
+  },
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 135,
+      "sha256": "3178a4154d8101370aea891109676ce95eeb2db00df380d3d0f45e910c12b3c3"
+    },
+    {
+      "path": "GITHUB-LIVECONTAINER.md",
+      "bytes": 7507,
+      "sha256": "ad1f7bcf65cc68b16c9675c712841fe29b2b31650b1558d0135ec28f18356039"
+    },
+    {
+      "path": "README.md",
+      "bytes": 17771,
+      "sha256": "0cdfc2689aeea0ff32848d012019996b688dd3fefd298c6496d792ce91d38bd9"
+    },
+    {
+      "path": "config/mediamtx.yml",
+      "bytes": 287,
+      "sha256": "b6caef199f85963cb981ad166faa7c817ed8f623f53c38b514e066276d353526"
+    },
+    {
+      "path": "config/srs.conf",
+      "bytes": 341,
+      "sha256": "f6ec6285d6192ce4fec284fed7c33fe3613d2430609dbd75dff5304d695abc5a"
+    },
+    {
+      "path": "ios/ContainerSmoke/main.m",
+      "bytes": 4908,
+      "sha256": "d3ba872264aafff90e509b0f992c1ef1bd338e1d3bb596500cadc42a61603140"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/Camera.swift",
+      "bytes": 7083,
+      "sha256": "f42a8e643cf90a6cda95ce5c38783ca211876c3ba47c02ec661d20de940486a5"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/FrameNormalizer.swift",
+      "bytes": 3014,
+      "sha256": "643db076ab7fb2c2402975679aeaf19ecc56dd9d788a85f5d91a2d183c9859e5"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/H264Decoder.swift",
+      "bytes": 5755,
+      "sha256": "1409364bf0a897372819364ec1b365f4a0a3960980042406f9ab6a7e633edb2a"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/H264Encoder.swift",
+      "bytes": 4889,
+      "sha256": "e1ed9436856166225607e506d6c053ef136de699efe9300533c4d052e1713fec"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/Pipeline.swift",
+      "bytes": 5014,
+      "sha256": "65a68f4998b6d6d681b3530acdada0d3688e5cdf7197d45a061374fa302b3277"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/StreamClient.swift",
+      "bytes": 3149,
+      "sha256": "ecae79fb1bbef4993a6b2f1ab7bad3ac062fe8cf1b718ab15186fe9e356c8009"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/ViewController.swift",
+      "bytes": 5924,
+      "sha256": "2a484d9ec7a82ff030fcac0e8c6e3f0f83e699f17e1bbc9e6ec1cbd7af25f381"
+    },
+    {
+      "path": "ios/OBSiPhoneLab/Wire.swift",
+      "bytes": 2502,
+      "sha256": "c4367a814d2381967576770b83dcf2b0bb185933d2f2bcfab66a57520ebc5866"
+    },
+    {
+      "path": "ios/ProbeKit/ProbeKit.h",
+      "bytes": 86,
+      "sha256": "d6cd6a5928ea80fc628f640cd7a37a12a2cb55911390b914c93e498e737a81b3"
+    },
+    {
+      "path": "ios/ProbeKit/ProbeKit.m",
+      "bytes": 431,
+      "sha256": "7d82023caf63b09530c744f7036eed8deca151b2b939d522ec42f63942ce44f2"
+    },
+    {
+      "path": "ios/project.yml",
+      "bytes": 2626,
+      "sha256": "c61148f027b79c485c7059ddd1a467bc28e68395b1672507a62cf73ac06a2185"
+    },
+    {
+      "path": "scripts/build-ios.sh",
+      "bytes": 1547,
+      "sha256": "25af2ec3216ef777fe0acfd769663a017adea08c42a7b7545bcb74e4c80ac3e8"
+    },
+    {
+      "path": "scripts/inspect_ipa.py",
+      "bytes": 2703,
+      "sha256": "dd5d1f1234b94d062bd8ba63cf45878ede13a8c1a4f290f6adeed0085a7e60a0"
+    },
+    {
+      "path": "validation/phone-return-720-v2.json",
+      "bytes": 1149,
+      "sha256": "03dd379d6be98c9ef83b3c9a113f735c33e5a265e28bc99af23d97d6e5e87bf5"
+    },
+    {
+      "path": "windows/bridge.py",
+      "bytes": 8100,
+      "sha256": "14562faf38fbac263e8d23e2853b6eb508408af7fc394b5bd6b53827df6e2ebf"
+    },
+    {
+      "path": "windows/check_bridge.py",
+      "bytes": 3593,
+      "sha256": "160ffc7920af8322b59d7a1298db75c9a98a5e06fd77b9b98ca66237975f71ba"
+    },
+    {
+      "path": "windows/check_relay.py",
+      "bytes": 2054,
+      "sha256": "e749cf4fa80febf2a38bb19c8083f915d18d30e578402fad0e7a8d28df89caf2"
+    },
+    {
+      "path": "windows/test_wire.py",
+      "bytes": 1832,
+      "sha256": "fabaeafc68c2feb3cae4e4736cf805d33cc69de5feb55c195d063c18d1e527eb"
+    },
+    {
+      "path": "windows/wire.py",
+      "bytes": 2860,
+      "sha256": "5c10ad1a329dff5c78d01827fb34b896c91c9af1f2f04891986733bf21e9068d"
+    }
+  ],
+  "source_commit": "a2f1869c9abd406ca1c4e8b35046186575e5b741",
+  "layout_note": "This manifest covers files included under ios-livecontainer-poc in the GitHub checkout; the local source ZIP also contains historical Windows validation captures."
+}

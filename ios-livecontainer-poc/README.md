@@ -2,7 +2,7 @@
 
 研究与实现日期：2026-10-11。用途：验证自己拥有代码和签名权限的 App 能否接收 OBS 视频、在摄像头与网络画面间切换、重新编码并回传。工程不修改抖音，不注册系统虚拟摄像头，也不使用屏幕共享。
 
-后续实机进展：iPhone 已连接 Windows，LiveContainer 已安装并能进入应用列表。ContainerSmoke 和 OBSiPhoneLab 已通过 GitHub Actions 的 macOS 构建，并通过 USB 复制到 LiveContainer 的文件目录、回读校验通过。**客体 App 启动与媒体运行仍待验证**。见 [GitHub Actions / LiveContainer 测试说明](GITHUB-LIVECONTAINER.md)。
+后续实机进展：用户确认 LiveContainer 证书导入、JIT-less 测试与 ContainerSmoke 启动通过；OBSiPhoneLab 可显示电脑动态测试图。旧版相机黑屏后，v2 加入持续诊断及显式重试，[编译打包成功](https://github.com/Sweige/OpenAI/actions/runs/38128825896)并经 USB 复制、回读校验通过。用户确认 v2 真实画面和 CAM frames 正常，切回网络测试图也正常。**电脑实收并完整解码手机回传的 900 帧，720×1280、约 30.00 FPS、PTS 递增、序号无缺口、无解码错误。**真实 OBS 场景接入仍待验证。见 [GitHub Actions / LiveContainer 测试说明](GITHUB-LIVECONTAINER.md)。
 
 ## 实际验证范围
 
@@ -12,13 +12,13 @@
 | TCP 发送 → 接收 → FFmpeg 解码 | 720×1280、1080×1920，各 60 帧通过，无 B 帧 |
 | TCP 回传接收，逐字节比对 | 两个分辨率通过 |
 | TCP 回传 → FFmpeg RTMP → 本机监听器 | 720×1280、60 帧通过，见 validation/relay-results.json |
-| OBS 实际发布到 SRS / MediaMTX | 未运行；提供配置，服务器配置需按安装版本验证 |
-| Swift / Objective-C 编译与 IPA 打包 | GitHub Actions 已通过；Xcode 26.6 / iPhoneOS SDK 26.5 / arm64 / Release；包含 ProbeKit framework |
-| LiveContainer 自研 IPA 导入、签名、iPhone 运行 | 两个 IPA 已通过 USB 复制到手机并回读验证；导入、签名、运行尚未验证 |
+| OBS 实际发布到 SRS / MediaMTX | 尚未验证真实 OBS；MediaMTX v1.21.2 已校验下载并使用独立配置成功启动本机 RTMP 1936 |
+| Swift / Objective-C 编译与 IPA 打包 | 初版和摄像头诊断版 v2 的 GitHub Actions 均通过；Xcode 26.6 / iPhoneOS SDK 26.5 / arm64 / Release；包含 ProbeKit framework |
+| LiveContainer 自研 IPA 导入、签名、iPhone 运行 | 用户确认 JIT-less、ContainerSmoke、v2 摄像头/网络画面均正常；电脑实收 900 帧手机 H.264 回传并验证通过 |
 | 音频、音画同步、长时间热稳定性 | 尚未实现 / 未验证 |
 | 抖音普通直播 | 不在此原型的已实现范围 |
 
-因此这是 Windows 数据面验证通过、iOS 编译打包通过的最小原型，不能称为已在 iOS 27 真机跑通的成品。仍须完成下面的真机实验。
+这是编译、用户实机画面切换、720×1280 手机编码回传均取得结果的最小原型。900 帧 PTS 区间 29.964167 秒，平均 30.0025 FPS；不能据此宣称已测得低延迟或长时间稳定性。真实 OBS 场景、1080×1920 与音频仍待验证，不能称为完整成品。设备返回 iOS 27.0，本轮没有独立验证系统真实性。
 
 ## 结构与数据流
 
